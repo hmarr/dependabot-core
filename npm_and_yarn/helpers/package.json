@@ -1,6 +1,7 @@
 {
   "name": "@dependabot/helper",
   "private": true,
+  "type": "module",
   "bin": {
     "helper": "run.js"
   },
@@ -8,10 +9,13 @@
     "lint": "eslint .",
     "test": "jest"
   },
+  "engines": {
+    "node": ">=14.16"
+  },
   "dependencies": {
     "@dependabot/yarn-lib": "^1.22.19",
     "@npmcli/arborist": "^6.1.1",
-    "detect-indent": "^6.1.0",
+    "detect-indent": "^7.0.1",
     "nock": "^13.2.9",
     "npm": "6.14.17",
     "semver": "^7.3.8"
