@@ -64,25 +64,23 @@ ARG USER_GID=$USER_UID
 RUN if ! getent group "$USER_GID"; then groupadd --gid "$USER_GID" dependabot ; \
      else GROUP_NAME=$(getent group $USER_GID | awk -F':' '{print $1}'); groupmod -n dependabot "$GROUP_NAME" ; fi \
   && useradd --uid "${USER_UID}" --gid "${USER_GID}" -m dependabot \
-  && mkdir -p /opt && chown dependabot:dependabot /opt
+  && mkdir -p /opt && chown dependabot:dependabot /opt && chgrp dependabot /etc/ssl/certs && chmod g+w /etc/ssl/certs
 
 
 ### RUBY
 
 # When bumping Ruby minor, need to also add the previous version to `bundler/helpers/v{1,2}/monkey_patches/definition_ruby_version_patch.rb`
-ARG RUBY_VERSION=3.1.2
-ARG RUBY_INSTALL_VERSION=0.8.3
-# Generally simplest to pin RUBYGEMS_SYSTEM_VERSION to the version that default ships with RUBY_VERSION.
-ARG RUBYGEMS_SYSTEM_VERSION=3.3.7
+ARG RUBY_VERSION=3.1.3
+ARG RUBY_INSTALL_VERSION=0.8.5
 
 ARG BUNDLER_V1_VERSION=1.17.3
 # When bumping Bundler, need to also regenerate `updater/Gemfile.lock` via `bundle update --bundler`
-ARG BUNDLER_V2_VERSION=2.3.25
+# Generally simplest to match the bundler version to the one that comes by default with whatever Ruby version we install.
+# This way other projects that import this library don't have to futz around with installing new /unexpected bundler versions.
+ARG BUNDLER_V2_VERSION=2.3.26
 ENV BUNDLE_SILENCE_ROOT_WARNING=1
 # Allow gem installs as the dependabot user
-ENV BUNDLE_PATH=".bundle" \
-    BUNDLE_BIN=".bundle/bin"
-ENV PATH="$BUNDLE_BIN:$PATH:$BUNDLE_PATH/bin"
+ENV BUNDLE_PATH=".bundle"
 
 # Install Ruby, update RubyGems, and install Bundler
 RUN mkdir -p /tmp/ruby-install \
@@ -92,27 +90,42 @@ RUN mkdir -p /tmp/ruby-install \
  && cd ruby-install-$RUBY_INSTALL_VERSION/ \
  && make \
  && ./bin/ruby-install --system --cleanup ruby $RUBY_VERSION -- --disable-install-doc \
- && gem update --system $RUBYGEMS_SYSTEM_VERSION --no-document \
  && gem install bundler -v $BUNDLER_V1_VERSION --no-document \
  && gem install bundler -v $BUNDLER_V2_VERSION --no-document \
  && rm -rf /var/lib/gems/*/cache/* \
  && rm -rf /tmp/ruby-install
 
-### PYTHON
 
+### PYTHON
+COPY --chown=dependabot:dependabot python/helpers /opt/python/helpers
 # Install Python with pyenv.
+USER root
 ENV PYENV_ROOT=/usr/local/.pyenv \
   PATH="/usr/local/.pyenv/bin:$PATH"
 RUN mkdir -p "$PYENV_ROOT" && chown dependabot:dependabot "$PYENV_ROOT"
 USER dependabot
+ENV DEPENDABOT_NATIVE_HELPERS_PATH="/opt"
 RUN git -c advice.detachedHead=false clone https://github.com/pyenv/pyenv.git --branch v2.3.6 --single-branch --depth=1 /usr/local/.pyenv \
   # This is the version of CPython that gets installed
   && pyenv install 3.11.0 \
   && pyenv global 3.11.0 \
-  && rm -Rf /tmp/python-build*
+  && pyenv install 3.10.8 \
+  && pyenv install 3.9.15 \
+  && pyenv install 3.8.15 \
+  && pyenv install 3.7.15 \
+  && rm -Rf /tmp/python-build* \
+  && bash /opt/python/helpers/build \
+  && cd /usr/local/.pyenv \
+  && tar czf 3.10.tar.gz versions/3.10.8 \
+  && tar czf 3.9.tar.gz versions/3.9.15 \
+  && tar czf 3.8.tar.gz versions/3.8.15 \
+  && tar czf 3.7.tar.gz versions/3.7.15 \
+  && rm -Rf versions/3.10.8 \
+  && rm -Rf versions/3.9.15 \
+  && rm -Rf versions/3.8.15 \
+  && rm -Rf versions/3.7.15
+
 USER root
-
-
 ### JAVASCRIPT
 
 # Install Node and npm
@@ -213,8 +226,8 @@ RUN cd /tmp \
 # Install Erlang and Elixir
 ENV PATH="$PATH:/usr/local/elixir/bin"
 # https://github.com/elixir-lang/elixir/releases
-ARG ELIXIR_VERSION=v1.14.1
-ARG ELIXIR_CHECKSUM=610b23ab7f8ffd247a62b187c148cd2aa599b5a595137fe0531664903b921306
+ARG ELIXIR_VERSION=v1.14.2
+ARG ELIXIR_CHECKSUM=2e4addb85de85218d32c16b3710e8087f5b18b3b1560742137ad4c41bbbea63a
 ARG ERLANG_MAJOR_VERSION=24
 ARG ERLANG_VERSION=1:${ERLANG_MAJOR_VERSION}.2.1-1
 RUN curl -sSLfO https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb \
@@ -242,9 +255,9 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.64.0 --pr
 ### Terraform
 
 USER root
-ARG TERRAFORM_VERSION=1.3.3
-ARG TERRAFORM_AMD64_CHECKSUM=fa5cbf4274c67f2937cabf1a6544529d35d0b8b729ce814b40d0611fd26193c1
-ARG TERRAFORM_ARM64_CHECKSUM=b940a080c698564df5e6a2f1c4e1b51b2c70a5115358d2361e3697d3985ecbfe
+ARG TERRAFORM_VERSION=1.3.7
+ARG TERRAFORM_AMD64_CHECKSUM=b8cf184dee15dfa89713fe56085313ab23db22e17284a9a27c0999c67ce3021e
+ARG TERRAFORM_ARM64_CHECKSUM=5b491c555ea8a62dda551675fd9f27d369f5cdbe87608d2a7367d3da2d38ea38
 RUN cd /tmp \
   && curl -o terraform-${TARGETARCH}.tar.gz https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${TARGETARCH}.zip \
   && printf "$TERRAFORM_AMD64_CHECKSUM terraform-amd64.tar.gz\n$TERRAFORM_ARM64_CHECKSUM terraform-arm64.tar.gz\n" | sha256sum -c --ignore-missing - \
@@ -258,15 +271,22 @@ ENV PUB_CACHE=/opt/dart/pub-cache \
   PUB_ENVIRONMENT="dependabot" \
   PATH="${PATH}:/opt/dart/dart-sdk/bin"
 
-ARG DART_VERSION=2.17.0
+# https://dart.dev/get-dart/archive
+ARG DART_VERSION=2.18.6
+
 RUN DART_ARCH=${TARGETARCH} \
   && if [ "$TARGETARCH" = "amd64" ]; then DART_ARCH=x64; fi \
-  && curl --connect-timeout 15 --retry 5 "https://storage.googleapis.com/dart-archive/channels/stable/release/${DART_VERSION}/sdk/dartsdk-linux-${DART_ARCH}-release.zip" > "/tmp/dart-sdk.zip" \
+  && DART_EXE="dartsdk-linux-${DART_ARCH}-release.zip" \
+  && DOWNLOAD_URL="https://storage.googleapis.com/dart-archive/channels/stable/release/${DART_VERSION}/sdk/${DART_EXE}" \
+  && curl --connect-timeout 15 --retry 5 "${DOWNLOAD_URL}" > "/tmp/${DART_EXE}" \
+  && curl --connect-timeout 15 --retry 5 "${DOWNLOAD_URL}.sha256sum" > "/tmp/${DART_EXE}.sha256sum" \
+  && cd /tmp/ \
+  && echo "$(cat /tmp/${DART_EXE}.sha256sum)" | sha256sum -c \
   && mkdir -p "$PUB_CACHE" \
   && chown dependabot:dependabot "$PUB_CACHE" \
-  && unzip "/tmp/dart-sdk.zip" -d "/opt/dart" > /dev/null \
+  && unzip "/tmp/${DART_EXE}" -d "/opt/dart" > /dev/null \
   && chmod -R o+rx "/opt/dart/dart-sdk" \
-  && rm "/tmp/dart-sdk.zip" \
+  && rm "/tmp/${DART_EXE}" \
   && dart --version
 
 COPY --chown=dependabot:dependabot LICENSE /home/dependabot
@@ -300,9 +320,6 @@ RUN bash /opt/npm_and_yarn/helpers/build
 # Our native helpers pull in yarn 1, so we need to reset the version globally to
 # 3.2.3.
 RUN corepack prepare yarn@3.2.3 --activate
-
-COPY --chown=dependabot:dependabot python/helpers /opt/python/helpers
-RUN bash /opt/python/helpers/build
 
 COPY --chown=dependabot:dependabot terraform/helpers /opt/terraform/helpers
 RUN bash /opt/terraform/helpers/build

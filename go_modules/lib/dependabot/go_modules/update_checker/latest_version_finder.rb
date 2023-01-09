@@ -75,6 +75,10 @@ module Dependabot
         end
 
         def available_versions
+          @available_versions ||= fetch_available_versions
+        end
+
+        def fetch_available_versions
           SharedHelpers.in_a_temporary_directory do
             SharedHelpers.with_git_configured(credentials: credentials) do
               manifest = parse_manifest
@@ -90,7 +94,11 @@ module Dependabot
               # Turn off the module proxy for private dependencies
               env = { "GOPRIVATE" => @goprivate }
 
-              versions_json = SharedHelpers.run_shell_command("go list -m -versions -json #{dependency.name}", env: env)
+              versions_json = SharedHelpers.run_shell_command(
+                "go list -m -versions -json #{dependency.name}",
+                fingerprint: "go list -m -versions -json <dependency_name>",
+                env: env
+              )
               version_strings = JSON.parse(versions_json)["Versions"]
 
               return [version_class.new(dependency.version)] if version_strings.nil?
@@ -143,10 +151,10 @@ module Dependabot
         end
 
         def filter_lower_versions(versions_array)
-          return versions_array unless dependency.version && version_class.correct?(dependency.version)
+          return versions_array unless dependency.numeric_version
 
           versions_array.
-            select { |version| version > version_class.new(dependency.version) }
+            select { |version| version > dependency.numeric_version }
         end
 
         def filter_ignored_versions(versions_array)
@@ -162,9 +170,8 @@ module Dependabot
         def wants_prerelease?
           @wants_prerelease ||=
             begin
-              current_version = dependency.version
-              current_version && version_class.correct?(current_version) &&
-                version_class.new(current_version).prerelease?
+              current_version = dependency.numeric_version
+              current_version&.prerelease?
             end
         end
 

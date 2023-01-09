@@ -37,7 +37,7 @@
 # rubocop:disable Style/GlobalVars
 
 require "etc"
-unless Etc.getpwuid(Process.uid).name == "dependabot"
+unless Etc.getpwuid(Process.uid).name == "dependabot" || ENV["ALLOW_DRY_RUN_STANDALONE"] == "true"
   puts <<~INFO
     bin/dry-run.rb is only supported in a development container.
 
@@ -241,7 +241,7 @@ option_parse = OptionParser.new do |opts|
   end
 
   opts.on("--pull-request",
-          "Output pull request information: title, description") do
+          "Output pull request information metadata: title, description") do
     $options[:pull_request] = true
   end
 end
@@ -679,11 +679,6 @@ dependencies.each do |dep|
     next
   end
 
-  if checker.up_to_date?
-    puts "    (no update needed as it's already up-to-date)"
-    next
-  end
-
   if checker.vulnerable?
     if checker.lowest_security_fix_version
       puts " => earliest available non-vulnerable version is " \
@@ -691,6 +686,11 @@ dependencies.each do |dep|
     else
       puts " => there is no available non-vulnerable version"
     end
+  end
+
+  if checker.up_to_date?
+    puts "    (no update needed as it's already up-to-date)"
+    next
   end
 
   latest_allowed_version = if checker.vulnerable?

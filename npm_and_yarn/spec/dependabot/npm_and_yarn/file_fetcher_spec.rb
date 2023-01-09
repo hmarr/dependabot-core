@@ -97,6 +97,37 @@ RSpec.describe Dependabot::NpmAndYarn::FileFetcher do
     end
   end
 
+  context "that has a blank file: in the package-lock" do
+    before do
+      stub_request(:get, File.join(url, "package.json?ref=sha")).
+        with(headers: { "Authorization" => "token token" }).
+        to_return(
+          status: 200,
+          body: fixture_to_response("projects/npm8/path_dependency_blank_file", "package.json"),
+          headers: json_header
+        )
+      stub_request(:get, File.join(url, "package-lock.json?ref=sha")).
+        with(headers: { "Authorization" => "token token" }).
+        to_return(
+          status: 200,
+          body: fixture_to_response("projects/npm8/path_dependency_blank_file", "package-lock.json"),
+          headers: json_header
+        )
+      stub_request(:get, File.join(url, "another/package.json?ref=sha")).
+        with(headers: { "Authorization" => "token token" }).
+        to_return(
+          status: 200,
+          body: fixture_to_response("projects/npm8/path_dependency_blank_file/another", "package.json"),
+          headers: json_header
+        )
+    end
+
+    it "does not have a /package.json" do
+      expect(file_fetcher_instance.files.map(&:name)).
+        to eq(%w(package.json package-lock.json another/package.json))
+    end
+  end
+
   context "with a .npmrc file" do
     before do
       stub_request(:get, url + "?ref=sha").
@@ -1208,8 +1239,7 @@ RSpec.describe Dependabot::NpmAndYarn::FileFetcher do
             with(headers: { "Authorization" => "token token" }).
             to_return(
               status: 200,
-              body:
-                fixture("github", "package_json_with_relative_workspaces.json"),
+              body: fixture("github", "package_json_with_relative_workspaces.json"),
               headers: json_header
             )
         end
@@ -1232,8 +1262,7 @@ RSpec.describe Dependabot::NpmAndYarn::FileFetcher do
             with(headers: { "Authorization" => "token token" }).
             to_return(
               status: 200,
-              body:
-                fixture("github", "package_json_with_nested_glob_workspaces.json"),
+              body: fixture("github", "package_json_with_nested_glob_workspaces.json"),
               headers: json_header
             )
           stub_request(
@@ -1391,8 +1420,7 @@ RSpec.describe Dependabot::NpmAndYarn::FileFetcher do
             with(headers: { "Authorization" => "token token" }).
             to_return(
               status: 200,
-              body:
-                fixture("github", "package_json_with_wildcard_workspace.json"),
+              body: fixture("github", "package_json_with_wildcard_workspace.json"),
               headers: json_header
             )
 
@@ -1592,4 +1620,38 @@ RSpec.describe Dependabot::NpmAndYarn::FileFetcher do
       end
     end
   end
+
+  context "with no .npmrc but package-lock.json contains a custom registry" do
+    before do
+      allow(file_fetcher_instance).to receive(:commit).and_return("sha")
+
+      stub_request(:get, File.join(url, "package.json?ref=sha")).
+        with(headers: { "Authorization" => "token token" }).
+        to_return(
+          status: 200,
+          body: fixture_to_response("projects/npm6/all_private", "package.json"),
+          headers: json_header
+        )
+
+      stub_request(:get, File.join(url, "package-lock.json?ref=sha")).
+        with(headers: { "Authorization" => "token token" }).
+        to_return(
+          status: 200,
+          body: fixture_to_response("projects/npm6/all_private", "package-lock.json"),
+          headers: json_header
+        )
+    end
+
+    it "infers an npmrc file" do
+      expect(file_fetcher_instance.files.count).to eq(3)
+      expect(file_fetcher_instance.files.map(&:name)).
+        to eq(%w(package.json package-lock.json .npmrc))
+      expect(file_fetcher_instance.files.find { |f| f.name == ".npmrc" }.content).
+        to eq("registry=https://npm.fury.io")
+    end
+  end
+end
+
+def fixture_to_response(dir, file)
+  JSON.dump({ "content" => Base64.encode64(fixture(dir, file)) })
 end

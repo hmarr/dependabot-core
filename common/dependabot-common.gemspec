@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "find"
 require "./lib/dependabot/version"
 
 Gem::Specification.new do |spec|
@@ -27,8 +26,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "bundler", ">= 1.16", "< 3.0.0"
   spec.add_dependency "commonmarker", ">= 0.20.1", "< 0.24.0"
   spec.add_dependency "docker_registry2", "~> 1.11", ">= 1.11.0"
-  spec.add_dependency "excon", "~> 0.75"
-  spec.add_dependency "faraday", "2.6.0"
+  spec.add_dependency "excon", "~> 0.75", "< 0.97"
+  spec.add_dependency "faraday", "2.7.2"
+  spec.add_dependency "faraday-retry", "2.0.0"
   spec.add_dependency "gitlab", "4.19.0"
   spec.add_dependency "nokogiri", "~> 1.8"
   spec.add_dependency "octokit", ">= 4.6", "< 7.0"
@@ -41,9 +41,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 13"
   spec.add_development_dependency "rspec", "~> 3.8"
   spec.add_development_dependency "rspec-its", "~> 1.2"
-  spec.add_development_dependency "rubocop", "~> 1.38.0"
+  spec.add_development_dependency "rubocop", "~> 1.39.0"
   spec.add_development_dependency "rubocop-performance", "~> 1.15.0"
-  spec.add_development_dependency "simplecov", "~> 0.21.0"
+  spec.add_development_dependency "simplecov", "~> 0.22.0"
   spec.add_development_dependency "simplecov-console", "~> 0.9.1"
   spec.add_development_dependency "stackprof", "~> 0.2.16"
   spec.add_development_dependency "vcr", "6.1.0"
@@ -51,15 +51,5 @@ Gem::Specification.new do |spec|
 
   next unless File.exist?("../.gitignore")
 
-  ignores = File.readlines("../.gitignore").grep(/\S+/).map(&:chomp)
-
-  next unless File.directory?("lib")
-
-  Find.find("lib", "bin") do |path|
-    if ignores.any? { |i| File.fnmatch(i, "/" + path, File::FNM_DOTMATCH) }
-      Find.prune
-    else
-      spec.files << path unless File.directory?(path)
-    end
-  end
+  spec.files += `git -C #{__dir__} ls-files lib bin -z`.split("\x0")
 end

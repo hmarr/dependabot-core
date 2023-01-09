@@ -471,26 +471,6 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
           end
         end
 
-        context "that is behind the latest release" do
-          let(:commit_compare_response) do
-            fixture("github", "commit_compare_behind.json")
-          end
-
-          it "updates to the latest release" do
-            expect(checker.latest_version).to eq(Gem::Version.new("4.0.0"))
-          end
-
-          context "when the registry doesn't return a latest release" do
-            let(:registry_response) do
-              fixture("npm_responses", "no_latest.json")
-            end
-
-            it "updates to the latest release" do
-              expect(checker.latest_version).to eq(Gem::Version.new("4.0.0"))
-            end
-          end
-        end
-
         context "for a dependency that doesn't have a release" do
           before do
             stub_request(:get, registry_listing_url).
@@ -522,16 +502,6 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
 
         it "returns the current version" do
           expect(checker.latest_version).to eq(current_version)
-        end
-
-        context "that is behind the latest release" do
-          let(:commit_compare_response) do
-            fixture("github", "commit_compare_behind.json")
-          end
-
-          it "updates to the latest release" do
-            expect(checker.latest_version).to eq(Gem::Version.new("4.0.0"))
-          end
         end
       end
 
@@ -875,7 +845,8 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
           credentials: credentials,
           dependency_files: dependency_files,
           latest_version_finder: described_class::LatestVersionFinder,
-          latest_allowable_version: updated_version
+          latest_allowable_version: updated_version,
+          repo_contents_path: nil
         ).and_return(dummy_version_resolver)
       expect(dummy_version_resolver).
         to receive(:latest_resolvable_previous_version).
@@ -1144,47 +1115,6 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
             )
         end
       end
-
-      context "that should switch to a registry source" do
-        let(:commit_compare_response) do
-          fixture("github", "commit_compare_behind.json")
-        end
-
-        let(:dependency_requirements) do
-          [{
-            requirement: nil,
-            file: "package.json",
-            groups: ["devDependencies"],
-            source: {
-              type: "git",
-              url: "https://github.com/jonschlinkert/is-number",
-              branch: nil,
-              ref: "master"
-            }
-          }]
-        end
-
-        it "delegates to the RequirementsUpdater" do
-          expect(described_class::RequirementsUpdater).
-            to receive(:new).
-            with(
-              requirements: dependency_requirements,
-              updated_source: nil,
-              latest_resolvable_version: "4.0.0",
-              update_strategy: :bump_versions
-            ).
-            and_call_original
-          expect(checker.updated_requirements).
-            to eq(
-              [{
-                file: "package.json",
-                requirement: "^4.0.0",
-                groups: ["devDependencies"],
-                source: nil
-              }]
-            )
-        end
-      end
     end
 
     context "updating a deprecated dependency with a peer requirement" do
@@ -1314,7 +1244,8 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
           credentials: credentials,
           dependency_files: dependency_files,
           latest_version_finder: described_class::LatestVersionFinder,
-          latest_allowable_version: Gem::Version.new("1.7.0")
+          latest_allowable_version: Gem::Version.new("1.7.0"),
+          repo_contents_path: nil
         ).and_return(dummy_version_resolver)
       expect(dummy_version_resolver).
         to receive(:dependency_updates_from_full_unlock).
@@ -1691,20 +1622,12 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
       let(:dependency_version) { "1.0.0" }
       let(:target_version) { Dependabot::NpmAndYarn::Version.new("1.0.1") }
 
-      it "delegates to the ConflictingDependencyResolver and VulnerabilityAuditor and explains the conflict", :vcr do
+      it "delegates to the ConflictingDependencyResolver and explains the conflict", :vcr do
         expect(described_class::ConflictingDependencyResolver).
           to receive(:new).
           with(
             dependency_files: dependency_files,
             credentials: credentials
-          ).and_call_original
-
-        expect(described_class::VulnerabilityAuditor).
-          to receive(:new).
-          with(
-            dependency_files: dependency_files,
-            credentials: credentials,
-            allow_removal: false
           ).and_call_original
 
         conflicting_dependencies_result = checker.send(:conflicting_dependencies)
@@ -1752,6 +1675,7 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
             allow_removal: false
           ).and_call_original
 
+        checker.send(:vulnerability_audit)
         conflicting_dependencies_result = checker.send(:conflicting_dependencies)
 
         expect(conflicting_dependencies_result.count).to eq(2)
@@ -1807,6 +1731,7 @@ RSpec.describe Dependabot::NpmAndYarn::UpdateChecker do
             allow_removal: false
           ).and_call_original
 
+        checker.send(:vulnerability_audit)
         conflicting_dependencies_result = checker.send(:conflicting_dependencies)
 
         expect(conflicting_dependencies_result.count).to eq(2)

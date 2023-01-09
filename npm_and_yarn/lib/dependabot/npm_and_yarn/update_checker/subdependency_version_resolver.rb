@@ -116,8 +116,9 @@ module Dependabot
         def run_yarn_berry_updater(path, lockfile_name)
           SharedHelpers.with_git_configured(credentials: credentials) do
             Dir.chdir(path) do
-              Helpers.run_yarn_commands(
-                "yarn up -R #{dependency.name}#{Helpers.yarn_berry_args}"
+              Helpers.run_yarn_command(
+                "yarn up -R #{dependency.name} #{Helpers.yarn_berry_args}".strip,
+                fingerprint: "yarn up -R <dependency_name> #{Helpers.yarn_berry_args}".strip
               )
               { lockfile_name => File.read(lockfile_name) }
             end
@@ -130,7 +131,7 @@ module Dependabot
               npm_version = Dependabot::NpmAndYarn::Helpers.npm_version(lockfile_content)
 
               if npm_version == "npm8"
-                SharedHelpers.run_shell_command(NativeHelpers.npm8_subdependency_update_command([dependency.name]))
+                NativeHelpers.run_npm8_subdependency_update_command([dependency.name])
                 { lockfile_name => File.read(lockfile_name) }
               else
                 SharedHelpers.run_helper_subprocess(

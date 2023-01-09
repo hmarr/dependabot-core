@@ -33,7 +33,15 @@ require "wildcard_matcher"
 # rubocop:disable Metrics/ClassLength
 module Dependabot
   class Updater
-    class SubprocessFailed < StandardError; end
+    class SubprocessFailed < StandardError
+      attr_reader :raven_context
+
+      def initialize(message, raven_context:)
+        super(message)
+
+        @raven_context = raven_context
+      end
+    end
 
     # These are errors that halt the update run and are handled in the main
     # backend. They do *not* raise a sentry.
@@ -87,8 +95,6 @@ module Dependabot
       # OOM errors are special cased so that we stop the update run early
       error = { "error-type": RUN_HALTING_ERRORS.fetch(e.class) }
       record_error(error)
-    ensure
-      clear_repo_contents_path
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/PerceivedComplexity
@@ -781,17 +787,6 @@ module Dependabot
       service.close_pull_request(job_id, job.dependencies, reason)
     end
 
-    def clear_repo_contents_path
-      # Remove the contents of the repo_contents_path, as these files are owned
-      # by the root user and will cause a permission error if left in place when
-      # we try to remove the directory.
-      # The `secure` flag ensures that we do not remove any symlinks, which
-      # could be exploited.
-      return unless repo_contents_path && Dir.exist?(repo_contents_path)
-
-      FileUtils.rm_rf("#{repo_contents_path}/.", secure: true)
-    end
-
     # rubocop:disable Metrics/MethodLength
     def handle_dependabot_error(error:, dependency:)
       error_details =
@@ -859,11 +854,10 @@ module Dependabot
           # info such as file contents or paths. This information is already
           # in the job logs, so we send a breadcrumb to Sentry to retrieve those
           # instead.
-          msg = "Dependency update process failed, please check the job logs"
-          Raven.capture_exception(
-            SubprocessFailed.new(msg),
-            raven_context
-          )
+          msg = "Subprocess #{error.raven_context[:fingerprint]} failed to run. Check the job logs for error messages"
+          sanitized_error = SubprocessFailed.new(msg, raven_context: error.raven_context)
+          sanitized_error.set_backtrace(error.backtrace)
+          Raven.capture_exception(sanitized_error, raven_context)
 
           { "error-type": "unknown_error" }
         when *Octokit::RATE_LIMITED_ERRORS

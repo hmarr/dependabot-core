@@ -12,6 +12,8 @@ module Dependabot
 
       class Forbidden < StandardError; end
 
+      class TimedOut < StandardError; end
+
       #######################
       # Constructor methods #
       #######################
@@ -79,19 +81,24 @@ module Dependabot
         JSON.parse(response.body)
       end
 
-      def pull_requests(repo, source_branch, target_branch)
-        pr_path = "#{repo}/pullrequests"
-        # Get pull requests with any status
-        pr_path += "?status=OPEN&status=MERGED&status=DECLINED&status=SUPERSEDED"
+      def pull_requests(repo, source_branch, target_branch, status = %w(OPEN MERGED DECLINED SUPERSEDED))
+        pr_path = "#{repo}/pullrequests?"
+        # Get pull requests with given status
+        status.each { |n| pr_path += "status=#{n}&" }
         next_page_url = base_url + pr_path
         pull_requests = paginate({ "next" => next_page_url })
 
         pull_requests unless source_branch && target_branch
 
         pull_requests.select do |pr|
-          pr_source_branch = pr.fetch("source").fetch("branch").fetch("name")
+          if source_branch.nil?
+            source_branch_matches = true
+          else
+            pr_source_branch = pr.fetch("source").fetch("branch").fetch("name")
+            source_branch_matches = pr_source_branch == source_branch
+          end
           pr_target_branch = pr.fetch("destination").fetch("branch").fetch("name")
-          pr_source_branch == source_branch && pr_target_branch == target_branch
+          source_branch_matches && pr_target_branch == target_branch
         end
       end
 
@@ -106,8 +113,7 @@ module Dependabot
         }
 
         files.each do |file|
-          absolute_path = file.name.start_with?("/") ? file.name : "/" + file.name
-          parameters[absolute_path] = file.content
+          parameters[file.path] = file.content
         end
 
         body = encode_form_parameters(parameters)
@@ -144,10 +150,29 @@ module Dependabot
       end
       # rubocop:enable Metrics/ParameterLists
 
+      def decline_pull_request(repo, pr_id, comment = nil)
+        # https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/
+        decline_path = "#{repo}/pullrequests/#{pr_id}/decline"
+        post(base_url + decline_path, "")
+
+        comment = "Dependabot declined the pull request." if comment.nil?
+
+        content = {
+          content: {
+            raw: comment
+          }
+        }
+
+        comment_path = "#{repo}/pullrequests/#{pr_id}/comments"
+        post(base_url + comment_path, content.to_json)
+      end
+
       def current_user
         base_url = "https://api.bitbucket.org/2.0/user?fields=uuid"
         response = get(base_url)
         JSON.parse(response.body).fetch("uuid")
+      rescue Unauthorized
+        [nil]
       end
 
       def default_reviewers(repo)
@@ -182,7 +207,7 @@ module Dependabot
 
       def get(url)
         response = Excon.get(
-          url,
+          URI::DEFAULT_PARSER.escape(url),
           user: credentials&.fetch("username", nil),
           password: credentials&.fetch("password", nil),
           # Setting to false to prevent Excon retries, use BitbucketWithRetries for retries.
@@ -205,6 +230,14 @@ module Dependabot
       end
 
       def post(url, body, content_type = "application/json")
+        headers = auth_header
+
+        headers = if body.empty?
+                    headers.merge({ "Accept" => "application/json" })
+                  else
+                    headers.merge({ "Content-Type" => content_type })
+                  end
+
         response = Excon.post(
           url,
           body: body,
@@ -212,16 +245,13 @@ module Dependabot
           password: credentials&.fetch("password", nil),
           idempotent: false,
           **SharedHelpers.excon_defaults(
-            headers: auth_header.merge(
-              {
-                "Content-Type" => content_type
-              }
-            )
+            headers: headers
           )
         )
         raise Unauthorized if response.status == 401
         raise Forbidden if response.status == 403
         raise NotFound if response.status == 404
+        raise TimedOut if response.status == 555
 
         response
       end
