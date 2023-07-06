@@ -71,7 +71,7 @@ RSpec.describe Dependabot::Maven::FileFetcher do
       to_return(
         status: 404
       )
-    stub_request(:get, %r{.*\?ref=sha}).
+    stub_request(:get, /.*\?ref=sha/).
       with(headers: { "Authorization" => "token token" }).
       to_return(
         status: 404
