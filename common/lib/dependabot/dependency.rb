@@ -36,12 +36,12 @@ module Dependabot
       @name_normalisers[package_manager] = name_builder
     end
 
-    attr_reader :name, :version, :requirements, :package_manager,
+    attr_reader :name, :version, :requirements, :package_manager, :package_ecosystem,
                 :previous_version, :previous_requirements,
                 :subdependency_metadata, :metadata
 
-    def initialize(name:, requirements:, package_manager:, version: nil,
-                   previous_version: nil, previous_requirements: nil,
+    def initialize(name:, requirements:, package_manager:, package_ecosystem: nil,
+                   version: nil, previous_version: nil, previous_requirements: nil,
                    subdependency_metadata: [], removed: false, metadata: {})
       @name = name
       @version = version
@@ -49,7 +49,20 @@ module Dependabot
       @previous_version = previous_version
       @previous_requirements =
         previous_requirements&.map { |req| symbolize_keys(req) }
+
       @package_manager = package_manager
+
+      # When given, this holds the package ecosystem that maps 1:1 to the
+      # `package-ecosystem` key value in `.dependabot.yml` file. If present, it
+      # will be preferred over package-manager for branch names in PRs, since
+      # the `package-manager` value can be confusing, refering to
+      # package managers not managing this dependency. For example, it has the
+      # value `npm_and_yarn` for PNPM updates.
+      #
+      # TODO: Eventually reconcile this
+
+      @package_ecosystem = package_ecosystem || package_manager
+
       unless top_level? || subdependency_metadata == []
         @subdependency_metadata = subdependency_metadata
                                   &.map { |h| symbolize_keys(h) }

@@ -44,7 +44,7 @@ module Dependabot
         end
 
         def package_manager
-          dependencies.first.package_manager
+          dependencies.first.package_ecosystem
         end
 
         def updating_a_property?
