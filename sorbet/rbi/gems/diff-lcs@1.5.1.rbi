@@ -7,6 +7,53 @@
 # source://diff-lcs//lib/diff/lcs.rb#3
 module Diff; end
 
+# == How Diff Works (by Mark-Jason Dominus)
+#
+# I once read an article written by the authors of +diff+; they said that they
+# hard worked very hard on the algorithm until they found the right one.
+#
+# I think what they ended up using (and I hope someone will correct me, because
+# I am not very confident about this) was the `longest common subsequence'
+# method. In the LCS problem, you have two sequences of items:
+#
+#    a b c d f g h j q z
+#    a b c d e f g i j k r x y z
+#
+# and you want to find the longest sequence of items that is present in both
+# original sequences in the same order. That is, you want to find a new
+# sequence *S* which can be obtained from the first sequence by deleting some
+# items, and from the second sequence by deleting other items. You also want
+# *S* to be as long as possible. In this case *S* is:
+#
+#    a b c d f g j z
+#
+# From there it's only a small step to get diff-like output:
+#
+#    e   h i   k   q r x y
+#    +   - +   +   - + + +
+#
+# This module solves the LCS problem. It also includes a canned function to
+# generate +diff+-like output.
+#
+# It might seem from the example above that the LCS of two sequences is always
+# pretty obvious, but that's not always the case, especially when the two
+# sequences have many repeated elements. For example, consider
+#
+#    a x b y c z p d q
+#    a b c a x b y c z
+#
+# A naive approach might start by matching up the +a+ and +b+ that appear at
+# the beginning of each sequence, like this:
+#
+#    a x b y c         z p d q
+#    a   b   c a b y c z
+#
+# This finds the common subsequence +a b c z+. But actually, the LCS is +a x b
+# y c z+:
+#
+#          a x b y c z p d q
+#    a b c a x b y c z
+#
 # source://diff-lcs//lib/diff/lcs.rb#51
 module Diff::LCS
   # Returns the difference set between +self+ and +other+. See Diff::LCS#diff.
@@ -91,7 +138,7 @@ module Diff::LCS
   def unpatch_me(patchset); end
 
   class << self
-    # :yields seq1[i] for each matched:
+    # :yields: seq1[i] for each matched
     #
     # source://diff-lcs//lib/diff/lcs.rb#144
     def LCS(seq1, seq2, &block); end
@@ -112,7 +159,7 @@ module Diff::LCS
     # source://diff-lcs//lib/diff/lcs.rb#168
     def diff(seq1, seq2, callbacks = T.unsafe(nil), &block); end
 
-    # :yields seq1[i] for each matched:
+    # :yields: seq1[i] for each matched
     #
     # source://diff-lcs//lib/diff/lcs.rb#144
     def lcs(seq1, seq2, &block); end
@@ -158,13 +205,13 @@ module Diff::LCS
     # representations of those objects. Prior to application, array
     # representations of Diff::LCS::Change objects will be reified.
     #
-    # source://diff-lcs//lib/diff/lcs.rb#624
+    # source://diff-lcs//lib/diff/lcs.rb#626
     def patch(src, patchset, direction = T.unsafe(nil)); end
 
     # Given a set of patchset, convert the current version to the next version.
     # Does no auto-discovery.
     #
-    # source://diff-lcs//lib/diff/lcs.rb#734
+    # source://diff-lcs//lib/diff/lcs.rb#736
     def patch!(src, patchset); end
 
     # #sdiff computes all necessary components to show two sequences and their
@@ -372,7 +419,7 @@ module Diff::LCS
     # Given a set of patchset, convert the current version to the prior version.
     # Does no auto-discovery.
     #
-    # source://diff-lcs//lib/diff/lcs.rb#728
+    # source://diff-lcs//lib/diff/lcs.rb#730
     def unpatch!(src, patchset); end
 
     private
@@ -649,15 +696,15 @@ end
 #     require 'pp'
 #     pp diffs.map { |e| e.map { |f| f.to_a } }
 #
-# source://diff-lcs//lib/diff/lcs/callbacks.rb#223
+# source://diff-lcs//lib/diff/lcs/callbacks.rb#225
 class Diff::LCS::ContextDiffCallbacks < ::Diff::LCS::DiffCallbacks
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#232
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#234
   def change(event); end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#224
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#226
   def discard_a(event); end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#228
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#230
   def discard_b(event); end
 end
 
@@ -749,38 +796,38 @@ end
 #     require 'pp'
 #     pp diffs.map { |e| e.map { |f| f.to_a } }
 #
-# source://diff-lcs//lib/diff/lcs/callbacks.rb#106
+# source://diff-lcs//lib/diff/lcs/callbacks.rb#108
 class Diff::LCS::DiffCallbacks
-  # :yields self:
+  # :yields: self
   #
   # @return [DiffCallbacks] a new instance of DiffCallbacks
   #
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#110
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#112
   def initialize; end
 
   # Returns the difference set collected during the diff process.
   #
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#108
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#110
   def diffs; end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#133
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#135
   def discard_a(event); end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#137
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#139
   def discard_b(event); end
 
   # Finalizes the diff process. If an unprocessed hunk still exists, then it
   # is appended to the diff list.
   #
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#125
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#127
   def finish; end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#129
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#131
   def match(_event); end
 
   private
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#141
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#143
   def finish_hunk; end
 end
 
@@ -800,48 +847,48 @@ class Diff::LCS::Hunk
 
   # Returns the value of attribute blocks.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#63
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#62
   def blocks; end
 
   # Returns a diff string based on a format.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#116
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#115
   def diff(format, last = T.unsafe(nil)); end
 
   # Returns the value of attribute end_new.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#65
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#64
   def end_new; end
 
   # Returns the value of attribute end_old.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#65
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#64
   def end_old; end
 
   # Returns the value of attribute file_length_difference.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#66
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#65
   def file_length_difference; end
 
   # Change the "start" and "end" fields to note that context should be added
   # to this hunk.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#70
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#69
   def flag_context; end
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#72
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#71
   def flag_context=(context); end
 
   # Merges this hunk and the provided hunk together if they overlap. Returns
   # a truthy value so that if there is no overlap, you can know the merge
   # was skipped.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#98
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#97
   def merge(hunk); end
 
   # @return [Boolean]
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#326
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#331
   def missing_last_newline?(data); end
 
   # Determines whether there is an overlap between this hunk and the
@@ -850,60 +897,60 @@ class Diff::LCS::Hunk
   #
   # @return [Boolean]
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#110
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#109
   def overlaps?(hunk); end
 
   # Returns the value of attribute start_new.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#64
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#63
   def start_new; end
 
   # Returns the value of attribute start_old.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#64
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#63
   def start_old; end
 
   # Merges this hunk and the provided hunk together if they overlap. Returns
   # a truthy value so that if there is no overlap, you can know the merge
   # was skipped.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#98
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#97
   def unshift(hunk); end
 
   private
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#213
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#214
   def context_diff(last = T.unsafe(nil)); end
 
   # Generate a range of item numbers to print. Only print 1 number if the
   # range has only one item in it. Otherwise, it's 'start,end'
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#293
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#298
   def context_range(mode, op, last = T.unsafe(nil)); end
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#271
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#276
   def ed_diff(format, _last = T.unsafe(nil)); end
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#339
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#344
   def encode(literal, target_encoding = T.unsafe(nil)); end
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#343
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#348
   def encode_as(string, *args); end
 
   # Note that an old diff can't have any context. Therefore, we know that
   # there's only one block in the hunk.
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#135
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#134
   def old_diff(_last = T.unsafe(nil)); end
 
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#160
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#159
   def unified_diff(last = T.unsafe(nil)); end
 
   # Generate a range of item numbers to print for unified diff. Print number
   # where block starts, followed by number of lines in the block
   # (don't print number of lines if it's 1)
   #
-  # source://diff-lcs//lib/diff/lcs/hunk.rb#311
+  # source://diff-lcs//lib/diff/lcs/hunk.rb#316
   def unified_range(mode, last); end
 end
 
@@ -1042,32 +1089,32 @@ end
 #     require 'pp'
 #     pp diffs.map { |e| e.to_a }
 #
-# source://diff-lcs//lib/diff/lcs/callbacks.rb#301
+# source://diff-lcs//lib/diff/lcs/callbacks.rb#303
 class Diff::LCS::SDiffCallbacks
-  # :yields self:
+  # :yields: self
   #
   # @return [SDiffCallbacks] a new instance of SDiffCallbacks
   # @yield [_self]
   # @yieldparam _self [Diff::LCS::SDiffCallbacks] the object that the method was called on
   #
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#305
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#307
   def initialize; end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#322
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#324
   def change(event); end
 
   # Returns the difference set collected during the diff process.
   #
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#303
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#305
   def diffs; end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#314
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#316
   def discard_a(event); end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#318
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#320
   def discard_b(event); end
 
-  # source://diff-lcs//lib/diff/lcs/callbacks.rb#310
+  # source://diff-lcs//lib/diff/lcs/callbacks.rb#312
   def match(event); end
 end
 

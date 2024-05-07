@@ -47,14 +47,14 @@ module Aws::CodeCommit; end
 #
 # See {#initialize} for a full list of supported configuration options.
 #
-# source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#52
+# source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#53
 class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   include ::Aws::ClientStubs
 
   # @overload initialize
   # @return [Client] a new instance of Client
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#395
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#419
   def initialize(*args); end
 
   # Creates an association between an approval rule template and a
@@ -79,7 +79,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/AssociateApprovalRuleTemplateWithRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#430
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#454
   def associate_approval_rule_template_with_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates an association between an approval rule template and one or
@@ -109,7 +109,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::BatchAssociateApprovalRuleTemplateWithRepositoriesOutput#errors #errors} => Array&lt;Types::BatchAssociateApprovalRuleTemplateWithRepositoriesError&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/BatchAssociateApprovalRuleTemplateWithRepositories AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#475
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#499
   def batch_associate_approval_rule_template_with_repositories(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about one or more merge conflicts in the attempted
@@ -193,7 +193,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::BatchDescribeMergeConflictsOutput#base_commit_id #base_commit_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/BatchDescribeMergeConflicts AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#596
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#620
   def batch_describe_merge_conflicts(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Removes the association between an approval rule template and one or
@@ -223,7 +223,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::BatchDisassociateApprovalRuleTemplateFromRepositoriesOutput#errors #errors} => Array&lt;Types::BatchDisassociateApprovalRuleTemplateFromRepositoriesError&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/BatchDisassociateApprovalRuleTemplateFromRepositories AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#642
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#666
   def batch_disassociate_approval_rule_template_from_repositories(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about the contents of one or more commits in a
@@ -264,7 +264,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::BatchGetCommitsOutput#errors #errors} => Array&lt;Types::BatchGetCommitsError&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/BatchGetCommits AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#697
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#721
   def batch_get_commits(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about one or more repositories.
@@ -314,13 +314,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::BatchGetRepositoriesOutput#errors #errors} => Array&lt;Types::BatchGetRepositoriesError&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/BatchGetRepositories AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#759
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#783
   def batch_get_repositories(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # @api private
   # @param params [{}]
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5116
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5140
   def build_request(operation_name, params = T.unsafe(nil)); end
 
   # Creates a template for approval rules that can then be associated with
@@ -330,13 +330,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # that meet the conditions of the template. For more information, see
   # AssociateApprovalRuleTemplateWithRepository.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.create_approval_rule_template({
-  #   approval_rule_template_name: "ApprovalRuleTemplateName", # required
-  #   approval_rule_template_content: "ApprovalRuleTemplateContent", # required
-  #   approval_rule_template_description: "ApprovalRuleTemplateDescription",
-  #   })
   # @example Response structure
   #
   #   resp.approval_rule_template.approval_rule_template_id #=> String
@@ -347,6 +340,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.approval_rule_template.last_modified_date #=> Time
   #   resp.approval_rule_template.creation_date #=> Time
   #   resp.approval_rule_template.last_modified_user #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.create_approval_rule_template({
+  #   approval_rule_template_name: "ApprovalRuleTemplateName", # required
+  #   approval_rule_template_content: "ApprovalRuleTemplateContent", # required
+  #   approval_rule_template_description: "ApprovalRuleTemplateDescription",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -357,7 +357,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreateApprovalRuleTemplateOutput#approval_rule_template #approval_rule_template} => Types::ApprovalRuleTemplate
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateApprovalRuleTemplate AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#850
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#874
   def create_approval_rule_template(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a branch in a repository and points the branch to a commit.
@@ -382,7 +382,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateBranch AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#885
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#909
   def create_branch(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a commit for a repository on the tip of a specified branch.
@@ -457,25 +457,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreateCommitOutput#files_deleted #files_deleted} => Array&lt;Types::FileMetadata&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#992
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1016
   def create_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a pull request in the specified repository.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.create_pull_request({
-  #   title: "Title", # required
-  #   description: "Description",
-  #   targets: [ # required
-  #   {
-  #   repository_name: "RepositoryName", # required
-  #   source_reference: "ReferenceName", # required
-  #   destination_reference: "ReferenceName",
-  #   },
-  #   ],
-  #   client_request_token: "ClientRequestToken",
-  #   })
   # @example Response structure
   #
   #   resp.pull_request.pull_request_id #=> String
@@ -508,6 +494,20 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.pull_request.approval_rules[0].last_modified_user #=> String
   #   resp.pull_request.approval_rules[0].origin_approval_rule_template.approval_rule_template_id #=> String
   #   resp.pull_request.approval_rules[0].origin_approval_rule_template.approval_rule_template_name #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.create_pull_request({
+  #   title: "Title", # required
+  #   description: "Description",
+  #   targets: [ # required
+  #   {
+  #   repository_name: "RepositoryName", # required
+  #   source_reference: "ReferenceName", # required
+  #   destination_reference: "ReferenceName",
+  #   },
+  #   ],
+  #   client_request_token: "ClientRequestToken",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -519,18 +519,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreatePullRequestOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreatePullRequest AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1084
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1108
   def create_pull_request(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates an approval rule for a pull request.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.create_pull_request_approval_rule({
-  #   pull_request_id: "PullRequestId", # required
-  #   approval_rule_name: "ApprovalRuleName", # required
-  #   approval_rule_content: "ApprovalRuleContent", # required
-  #   })
   # @example Response structure
   #
   #   resp.approval_rule.approval_rule_id #=> String
@@ -542,6 +535,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.approval_rule.last_modified_user #=> String
   #   resp.approval_rule.origin_approval_rule_template.approval_rule_template_id #=> String
   #   resp.approval_rule.origin_approval_rule_template.approval_rule_template_name #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.create_pull_request_approval_rule({
+  #   pull_request_id: "PullRequestId", # required
+  #   approval_rule_name: "ApprovalRuleName", # required
+  #   approval_rule_content: "ApprovalRuleContent", # required
+  #   })
   # @option params
   # @option params
   # @option params
@@ -552,21 +552,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreatePullRequestApprovalRuleOutput#approval_rule #approval_rule} => Types::ApprovalRule
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreatePullRequestApprovalRule AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1167
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1191
   def create_pull_request_approval_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a new, empty repository.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.create_repository({
-  #   repository_name: "RepositoryName", # required
-  #   repository_description: "RepositoryDescription",
-  #   tags: {
-  #   "TagKey" => "TagValue",
-  #   },
-  #   kms_key_id: "KmsKeyId",
-  #   })
   # @example Response structure
   #
   #   resp.repository_metadata.account_id #=> String
@@ -580,6 +570,16 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.repository_metadata.clone_url_ssh #=> String
   #   resp.repository_metadata.arn #=> String
   #   resp.repository_metadata.kms_key_id #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.create_repository({
+  #   repository_name: "RepositoryName", # required
+  #   repository_description: "RepositoryDescription",
+  #   tags: {
+  #   "TagKey" => "TagValue",
+  #   },
+  #   kms_key_id: "KmsKeyId",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -591,7 +591,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreateRepositoryOutput#repository_metadata #repository_metadata} => Types::RepositoryMetadata
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1252
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1276
   def create_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates an unreferenced commit that represents the result of merging
@@ -606,6 +606,10 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   #  </note>
   #
+  # @example Response structure
+  #
+  #   resp.commit_id #=> String
+  #   resp.tree_id #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.create_unreferenced_merge_commit({
@@ -641,10 +645,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   ],
   #   },
   #   })
-  # @example Response structure
-  #
-  #   resp.commit_id #=> String
-  #   resp.tree_id #=> String
   # @option params
   # @option params
   # @option params
@@ -664,7 +664,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::CreateUnreferencedMergeCommitOutput#tree_id #tree_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateUnreferencedMergeCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1367
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1391
   def create_unreferenced_merge_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a specified approval rule template. Deleting a template does
@@ -687,7 +687,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteApprovalRuleTemplateOutput#approval_rule_template_id #approval_rule_template_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeleteApprovalRuleTemplate AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1397
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1421
   def delete_approval_rule_template(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a branch from a repository, unless that branch is the default
@@ -712,7 +712,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteBranchOutput#deleted_branch #deleted_branch} => Types::BranchInfo
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeleteBranch AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1431
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1455
   def delete_branch(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes the content of a comment made on a change, file, or commit in
@@ -745,13 +745,19 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteCommentContentOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeleteCommentContent AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1472
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1496
   def delete_comment_content(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a specified file from a specified branch. A commit is created
   # on the branch that contains the revision. The file still exists in the
   # commits earlier to the commit that contains the deletion.
   #
+  # @example Response structure
+  #
+  #   resp.commit_id #=> String
+  #   resp.blob_id #=> String
+  #   resp.tree_id #=> String
+  #   resp.file_path #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.delete_file({
@@ -764,12 +770,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   name: "Name",
   #   email: "Email",
   #   })
-  # @example Response structure
-  #
-  #   resp.commit_id #=> String
-  #   resp.blob_id #=> String
-  #   resp.tree_id #=> String
-  #   resp.file_path #=> String
   # @option params
   # @option params
   # @option params
@@ -788,7 +788,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteFileOutput#file_path #file_path} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeleteFile AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1552
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1576
   def delete_file(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes an approval rule from a specified pull request. Approval rules
@@ -816,7 +816,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeletePullRequestApprovalRuleOutput#approval_rule_id #approval_rule_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeletePullRequestApprovalRule AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1590
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1614
   def delete_pull_request_approval_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a repository. If a specified repository was already deleted, a
@@ -842,7 +842,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteRepositoryOutput#repository_id #repository_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DeleteRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1623
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1647
   def delete_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about one or more merge conflicts in the attempted
@@ -922,7 +922,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeMergeConflictsOutput#base_commit_id #base_commit_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DescribeMergeConflicts AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1737
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1761
   def describe_merge_conflicts(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about one or more pull request events.
@@ -981,7 +981,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::DescribePullRequestEventsOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DescribePullRequestEvents AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1818
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1842
   def describe_pull_request_events(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Removes the association between a template and a repository so that
@@ -1003,7 +1003,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/DisassociateApprovalRuleTemplateFromRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1849
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1873
   def disassociate_approval_rule_template_from_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Evaluates whether a pull request has met all the conditions specified
@@ -1032,7 +1032,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::EvaluatePullRequestApprovalRulesOutput#evaluation #evaluation} => Types::Evaluation
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/EvaluatePullRequestApprovalRules AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1888
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1912
   def evaluate_pull_request_approval_rules(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about a specified approval rule template.
@@ -1060,7 +1060,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetApprovalRuleTemplateOutput#approval_rule_template #approval_rule_template} => Types::ApprovalRuleTemplate
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetApprovalRuleTemplate AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1924
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1948
   def get_approval_rule_template(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the base-64 encoded content of an individual blob in a
@@ -1084,7 +1084,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetBlobOutput#content #content} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetBlob AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1957
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1981
   def get_blob(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about a repository branch, including its name and
@@ -1109,7 +1109,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetBranchOutput#branch #branch} => Types::BranchInfo
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetBranch AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#1992
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2016
   def get_branch(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the content of a comment made on a change, file, or commit in
@@ -1148,7 +1148,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetCommentOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetComment AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2039
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2063
   def get_comment(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about reactions to a specified comment ID.
@@ -1157,14 +1157,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.get_comment_reactions({
-  #   comment_id: "CommentId", # required
-  #   reaction_user_arn: "Arn",
-  #   next_token: "NextToken",
-  #   max_results: 1,
-  #   })
   # @example Response structure
   #
   #   resp.reactions_for_comment #=> Array
@@ -1175,6 +1167,14 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.reactions_for_comment[0].reaction_users[0] #=> String
   #   resp.reactions_for_comment[0].reactions_from_deleted_users_count #=> Integer
   #   resp.next_token #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.get_comment_reactions({
+  #   comment_id: "CommentId", # required
+  #   reaction_user_arn: "Arn",
+  #   next_token: "NextToken",
+  #   max_results: 1,
+  #   })
   # @option params
   # @option params
   # @option params
@@ -1187,7 +1187,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetCommentReactionsOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetCommentReactions AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2094
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2118
   def get_comment_reactions(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about comments made on the comparison between two
@@ -1248,7 +1248,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetCommentsForComparedCommitOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetCommentsForComparedCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2174
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2198
   def get_comments_for_compared_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns comments made on a pull request.
@@ -1311,7 +1311,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetCommentsForPullRequestOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetCommentsForPullRequest AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2266
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2290
   def get_comments_for_pull_request(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about a commit, including commit message and
@@ -1346,7 +1346,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetCommitOutput#commit #commit} => Types::Commit
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2310
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2334
   def get_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about the differences in a valid commit specifier
@@ -1355,17 +1355,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.get_differences({
-  #   repository_name: "RepositoryName", # required
-  #   before_commit_specifier: "CommitName",
-  #   after_commit_specifier: "CommitName", # required
-  #   before_path: "Path",
-  #   after_path: "Path",
-  #   max_results: 1,
-  #   next_token: "NextToken",
-  #   })
   # @example Response structure
   #
   #   resp.differences #=> Array
@@ -1377,6 +1366,17 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.differences[0].after_blob.mode #=> String
   #   resp.differences[0].change_type #=> String, one of "A", "M", "D"
   #   resp.next_token #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.get_differences({
+  #   repository_name: "RepositoryName", # required
+  #   before_commit_specifier: "CommitName",
+  #   after_commit_specifier: "CommitName", # required
+  #   before_path: "Path",
+  #   after_path: "Path",
+  #   max_results: 1,
+  #   next_token: "NextToken",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -1392,19 +1392,12 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetDifferencesOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetDifferences AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2388
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2412
   def get_differences(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the base-64 encoded contents of a specified file and its
   # metadata.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.get_file({
-  #   repository_name: "RepositoryName", # required
-  #   commit_specifier: "CommitName",
-  #   file_path: "Path", # required
-  #   })
   # @example Response structure
   #
   #   resp.commit_id #=> String
@@ -1413,6 +1406,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.file_mode #=> String, one of "EXECUTABLE", "NORMAL", "SYMLINK"
   #   resp.file_size #=> Integer
   #   resp.file_content #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.get_file({
+  #   repository_name: "RepositoryName", # required
+  #   commit_specifier: "CommitName",
+  #   file_path: "Path", # required
+  #   })
   # @option params
   # @option params
   # @option params
@@ -1428,18 +1428,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetFileOutput#file_content #file_content} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetFile AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2440
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2464
   def get_file(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the contents of a specified folder in a repository.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.get_folder({
-  #   repository_name: "RepositoryName", # required
-  #   commit_specifier: "CommitName",
-  #   folder_path: "Path", # required
-  #   })
   # @example Response structure
   #
   #   resp.commit_id #=> String
@@ -1463,6 +1456,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.sub_modules[0].commit_id #=> String
   #   resp.sub_modules[0].absolute_path #=> String
   #   resp.sub_modules[0].relative_path #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.get_folder({
+  #   repository_name: "RepositoryName", # required
+  #   commit_specifier: "CommitName",
+  #   folder_path: "Path", # required
+  #   })
   # @option params
   # @option params
   # @option params
@@ -1479,7 +1479,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetFolderOutput#sub_modules #sub_modules} => Array&lt;Types::SubModule&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetFolder AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2509
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2533
   def get_folder(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about a specified merge commit.
@@ -1514,7 +1514,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetMergeCommitOutput#merged_commit_id #merged_commit_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetMergeCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2569
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2593
   def get_merge_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about merge conflicts between the before and after
@@ -1522,18 +1522,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.get_merge_conflicts({
-  #   repository_name: "RepositoryName", # required
-  #   destination_commit_specifier: "CommitName", # required
-  #   source_commit_specifier: "CommitName", # required
-  #   merge_option: "FAST_FORWARD_MERGE", # required, accepts FAST_FORWARD_MERGE, SQUASH_MERGE, THREE_WAY_MERGE
-  #   conflict_detail_level: "FILE_LEVEL", # accepts FILE_LEVEL, LINE_LEVEL
-  #   max_conflict_files: 1,
-  #   conflict_resolution_strategy: "NONE", # accepts NONE, ACCEPT_SOURCE, ACCEPT_DESTINATION, AUTOMERGE
-  #   next_token: "NextToken",
-  #   })
   # @example Response structure
   #
   #   resp.mergeable #=> Boolean
@@ -1561,6 +1549,18 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.conflict_metadata_list[0].merge_operations.source #=> String, one of "A", "M", "D"
   #   resp.conflict_metadata_list[0].merge_operations.destination #=> String, one of "A", "M", "D"
   #   resp.next_token #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.get_merge_conflicts({
+  #   repository_name: "RepositoryName", # required
+  #   destination_commit_specifier: "CommitName", # required
+  #   source_commit_specifier: "CommitName", # required
+  #   merge_option: "FAST_FORWARD_MERGE", # required, accepts FAST_FORWARD_MERGE, SQUASH_MERGE, THREE_WAY_MERGE
+  #   conflict_detail_level: "FILE_LEVEL", # accepts FILE_LEVEL, LINE_LEVEL
+  #   max_conflict_files: 1,
+  #   conflict_resolution_strategy: "NONE", # accepts NONE, ACCEPT_SOURCE, ACCEPT_DESTINATION, AUTOMERGE
+  #   next_token: "NextToken",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -1581,7 +1581,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetMergeConflictsOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetMergeConflicts AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2667
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2691
   def get_merge_conflicts(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about the merge options available for merging two
@@ -1619,7 +1619,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetMergeOptionsOutput#base_commit_id #base_commit_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetMergeOptions AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2730
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2754
   def get_merge_options(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about a pull request in a specified repository.
@@ -1669,7 +1669,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetPullRequestOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetPullRequest AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2788
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2812
   def get_pull_request(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about the approval states for a specified pull
@@ -1696,7 +1696,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetPullRequestApprovalStatesOutput#approvals #approvals} => Array&lt;Types::Approval&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetPullRequestApprovalStates AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2824
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2848
   def get_pull_request_approval_states(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about whether approval rules have been set aside
@@ -1724,7 +1724,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetPullRequestOverrideStateOutput#overrider #overrider} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetPullRequestOverrideState AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2863
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2887
   def get_pull_request_override_state(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns information about a repository.
@@ -1764,7 +1764,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetRepositoryOutput#repository_metadata #repository_metadata} => Types::RepositoryMetadata
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2910
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2934
   def get_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about triggers configured for a repository.
@@ -1794,7 +1794,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::GetRepositoryTriggersOutput#triggers #triggers} => Array&lt;Types::RepositoryTrigger&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetRepositoryTriggers AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2947
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2971
   def get_repository_triggers(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Lists all approval rule templates in the specified Amazon Web Services
@@ -1825,7 +1825,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListApprovalRuleTemplatesOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListApprovalRuleTemplates AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#2989
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3013
   def list_approval_rule_templates(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Lists all approval rule templates that are associated with a specified
@@ -1833,6 +1833,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
+  # @example Response structure
+  #
+  #   resp.approval_rule_template_names #=> Array
+  #   resp.approval_rule_template_names[0] #=> String
+  #   resp.next_token #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.list_associated_approval_rule_templates_for_repository({
@@ -1840,11 +1845,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   next_token: "NextToken",
   #   max_results: 1,
   #   })
-  # @example Response structure
-  #
-  #   resp.approval_rule_template_names #=> Array
-  #   resp.approval_rule_template_names[0] #=> String
-  #   resp.next_token #=> String
   # @option params
   # @option params
   # @option params
@@ -1856,7 +1856,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListAssociatedApprovalRuleTemplatesForRepositoryOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListAssociatedApprovalRuleTemplatesForRepository AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3034
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3058
   def list_associated_approval_rule_templates_for_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about one or more branches in a repository.
@@ -1884,7 +1884,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListBranchesOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListBranches AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3071
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3095
   def list_branches(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves a list of commits and changes to a specified file.
@@ -1933,7 +1933,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListFileCommitHistoryResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListFileCommitHistory AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3140
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3164
   def list_file_commit_history(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns a list of pull requests for a specified repository. The return
@@ -1968,13 +1968,19 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListPullRequestsOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListPullRequests AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3195
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3219
   def list_pull_requests(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about one or more repositories.
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
+  # @example Response structure
+  #
+  #   resp.repositories #=> Array
+  #   resp.repositories[0].repository_name #=> String
+  #   resp.repositories[0].repository_id #=> String
+  #   resp.next_token #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.list_repositories({
@@ -1982,12 +1988,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   sort_by: "repositoryName", # accepts repositoryName, lastModifiedDate
   #   order: "ascending", # accepts ascending, descending
   #   })
-  # @example Response structure
-  #
-  #   resp.repositories #=> Array
-  #   resp.repositories[0].repository_name #=> String
-  #   resp.repositories[0].repository_id #=> String
-  #   resp.next_token #=> String
   # @option params
   # @option params
   # @option params
@@ -1999,7 +1999,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListRepositoriesOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListRepositories AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3242
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3266
   def list_repositories(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Lists all repositories associated with the specified approval rule
@@ -2007,6 +2007,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #
   # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
   #
+  # @example Response structure
+  #
+  #   resp.repository_names #=> Array
+  #   resp.repository_names[0] #=> String
+  #   resp.next_token #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.list_repositories_for_approval_rule_template({
@@ -2014,11 +2019,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   next_token: "NextToken",
   #   max_results: 1,
   #   })
-  # @example Response structure
-  #
-  #   resp.repository_names #=> Array
-  #   resp.repository_names[0] #=> String
-  #   resp.next_token #=> String
   # @option params
   # @option params
   # @option params
@@ -2030,7 +2030,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListRepositoriesForApprovalRuleTemplateOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListRepositoriesForApprovalRuleTemplate AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3287
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3311
   def list_repositories_for_approval_rule_template(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets information about Amazon Web Servicestags for a specified Amazon
@@ -2063,11 +2063,15 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::ListTagsForResourceOutput#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListTagsForResource AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3331
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3355
   def list_tags_for_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Merges two branches using the fast-forward merge strategy.
   #
+  # @example Response structure
+  #
+  #   resp.commit_id #=> String
+  #   resp.tree_id #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.merge_branches_by_fast_forward({
@@ -2076,10 +2080,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   destination_commit_specifier: "CommitName", # required
   #   target_branch: "BranchName",
   #   })
-  # @example Response structure
-  #
-  #   resp.commit_id #=> String
-  #   resp.tree_id #=> String
   # @option params
   # @option params
   # @option params
@@ -2092,11 +2092,15 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergeBranchesByFastForwardOutput#tree_id #tree_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergeBranchesByFastForward AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3375
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3399
   def merge_branches_by_fast_forward(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Merges two branches using the squash merge strategy.
   #
+  # @example Response structure
+  #
+  #   resp.commit_id #=> String
+  #   resp.tree_id #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.merge_branches_by_squash({
@@ -2132,10 +2136,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   ],
   #   },
   #   })
-  # @example Response structure
-  #
-  #   resp.commit_id #=> String
-  #   resp.tree_id #=> String
   # @option params
   # @option params
   # @option params
@@ -2155,11 +2155,15 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergeBranchesBySquashOutput#tree_id #tree_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergeBranchesBySquash AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3480
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3504
   def merge_branches_by_squash(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Merges two specified branches using the three-way merge strategy.
   #
+  # @example Response structure
+  #
+  #   resp.commit_id #=> String
+  #   resp.tree_id #=> String
   # @example Request syntax with placeholder values
   #
   #   resp = client.merge_branches_by_three_way({
@@ -2195,10 +2199,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   ],
   #   },
   #   })
-  # @example Response structure
-  #
-  #   resp.commit_id #=> String
-  #   resp.tree_id #=> String
   # @option params
   # @option params
   # @option params
@@ -2218,7 +2218,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergeBranchesByThreeWayOutput#tree_id #tree_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergeBranchesByThreeWay AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3584
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3608
   def merge_branches_by_three_way(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Attempts to merge the source commit of a pull request into the
@@ -2226,13 +2226,6 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # commit using the fast-forward merge strategy. If the merge is
   # successful, it closes the pull request.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.merge_pull_request_by_fast_forward({
-  #   pull_request_id: "PullRequestId", # required
-  #   repository_name: "RepositoryName", # required
-  #   source_commit_id: "ObjectId",
-  #   })
   # @example Response structure
   #
   #   resp.pull_request.pull_request_id #=> String
@@ -2265,6 +2258,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.pull_request.approval_rules[0].last_modified_user #=> String
   #   resp.pull_request.approval_rules[0].origin_approval_rule_template.approval_rule_template_id #=> String
   #   resp.pull_request.approval_rules[0].origin_approval_rule_template.approval_rule_template_name #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.merge_pull_request_by_fast_forward({
+  #   pull_request_id: "PullRequestId", # required
+  #   repository_name: "RepositoryName", # required
+  #   source_commit_id: "ObjectId",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -2275,7 +2275,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergePullRequestByFastForwardOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergePullRequestByFastForward AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3656
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3680
   def merge_pull_request_by_fast_forward(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Attempts to merge the source commit of a pull request into the
@@ -2366,7 +2366,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergePullRequestBySquashOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergePullRequestBySquash AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3788
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3812
   def merge_pull_request_by_squash(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Attempts to merge the source commit of a pull request into the
@@ -2457,7 +2457,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::MergePullRequestByThreeWayOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/MergePullRequestByThreeWay AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3920
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3944
   def merge_pull_request_by_three_way(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Sets aside (overrides) all approval rule requirements for a specified
@@ -2478,7 +2478,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/OverridePullRequestApprovalRules AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3958
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#3982
   def override_pull_request_approval_rules(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Posts a comment on the comparison between two commits.
@@ -2538,26 +2538,11 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::PostCommentForComparedCommitOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PostCommentForComparedCommit AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4046
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4070
   def post_comment_for_compared_commit(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Posts a comment on a pull request.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.post_comment_for_pull_request({
-  #   pull_request_id: "PullRequestId", # required
-  #   repository_name: "RepositoryName", # required
-  #   before_commit_id: "CommitId", # required
-  #   after_commit_id: "CommitId", # required
-  #   location: {
-  #   file_path: "Path",
-  #   file_position: 1,
-  #   relative_file_version: "BEFORE", # accepts BEFORE, AFTER
-  #   },
-  #   content: "Content", # required
-  #   client_request_token: "ClientRequestToken",
-  #   })
   # @example Response structure
   #
   #   resp.repository_name #=> String
@@ -2581,6 +2566,21 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.comment.caller_reactions[0] #=> String
   #   resp.comment.reaction_counts #=> Hash
   #   resp.comment.reaction_counts["ReactionValue"] #=> Integer
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.post_comment_for_pull_request({
+  #   pull_request_id: "PullRequestId", # required
+  #   repository_name: "RepositoryName", # required
+  #   before_commit_id: "CommitId", # required
+  #   after_commit_id: "CommitId", # required
+  #   location: {
+  #   file_path: "Path",
+  #   file_position: 1,
+  #   relative_file_version: "BEFORE", # accepts BEFORE, AFTER
+  #   },
+  #   content: "Content", # required
+  #   client_request_token: "ClientRequestToken",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -2602,19 +2602,12 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::PostCommentForPullRequestOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PostCommentForPullRequest AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4144
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4168
   def post_comment_for_pull_request(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Posts a comment in reply to an existing comment on a comparison
   # between commits or a pull request.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.post_comment_reply({
-  #   in_reply_to: "CommentId", # required
-  #   client_request_token: "ClientRequestToken",
-  #   content: "Content", # required
-  #   })
   # @example Response structure
   #
   #   resp.comment.comment_id #=> String
@@ -2629,6 +2622,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.comment.caller_reactions[0] #=> String
   #   resp.comment.reaction_counts #=> Hash
   #   resp.comment.reaction_counts["ReactionValue"] #=> Integer
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.post_comment_reply({
+  #   in_reply_to: "CommentId", # required
+  #   client_request_token: "ClientRequestToken",
+  #   content: "Content", # required
+  #   })
   # @option params
   # @option params
   # @option params
@@ -2639,7 +2639,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::PostCommentReplyOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PostCommentReply AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4201
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4225
   def post_comment_reply(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Adds or updates a reaction to a specified comment for the user whose
@@ -2660,7 +2660,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PutCommentReaction AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4237
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4261
   def put_comment_reaction(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Adds or updates a file in a branch in an CodeCommit repository, and
@@ -2702,7 +2702,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::PutFileOutput#tree_id #tree_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PutFile AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4321
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4345
   def put_file(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Replaces all triggers for a repository. Used to create or delete
@@ -2734,7 +2734,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::PutRepositoryTriggersOutput#configuration_id #configuration_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/PutRepositoryTriggers AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4363
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4387
   def put_repository_triggers(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Adds or updates tags for a resource in CodeCommit. For a list of valid
@@ -2760,7 +2760,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/TagResource AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4398
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4422
   def tag_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Tests the functionality of repository triggers by sending information
@@ -2799,7 +2799,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::TestRepositoryTriggersOutput#failed_executions #failed_executions} => Array&lt;Types::RepositoryTriggerExecutionFailure&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/TestRepositoryTriggers AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4446
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4470
   def test_repository_triggers(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Removes tags for a resource in CodeCommit. For a list of valid
@@ -2823,20 +2823,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UntagResource AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4479
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4503
   def untag_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the content of an approval rule template. You can change the
   # number of required approvals, the membership of the approval rule, and
   # whether an approval pool is defined.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.update_approval_rule_template_content({
-  #   approval_rule_template_name: "ApprovalRuleTemplateName", # required
-  #   new_rule_content: "ApprovalRuleTemplateContent", # required
-  #   existing_rule_content_sha_256: "RuleContentSha256",
-  #   })
   # @example Response structure
   #
   #   resp.approval_rule_template.approval_rule_template_id #=> String
@@ -2847,6 +2840,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.approval_rule_template.last_modified_date #=> Time
   #   resp.approval_rule_template.creation_date #=> Time
   #   resp.approval_rule_template.last_modified_user #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.update_approval_rule_template_content({
+  #   approval_rule_template_name: "ApprovalRuleTemplateName", # required
+  #   new_rule_content: "ApprovalRuleTemplateContent", # required
+  #   existing_rule_content_sha_256: "RuleContentSha256",
+  #   })
   # @option params
   # @option params
   # @option params
@@ -2857,7 +2857,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdateApprovalRuleTemplateContentOutput#approval_rule_template #approval_rule_template} => Types::ApprovalRuleTemplate
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateApprovalRuleTemplateContent AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4527
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4551
   def update_approval_rule_template_content(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the description for a specified approval rule template.
@@ -2887,7 +2887,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdateApprovalRuleTemplateDescriptionOutput#approval_rule_template #approval_rule_template} => Types::ApprovalRuleTemplate
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateApprovalRuleTemplateDescription AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4566
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4590
   def update_approval_rule_template_description(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the name of a specified approval rule template.
@@ -2917,7 +2917,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdateApprovalRuleTemplateNameOutput#approval_rule_template #approval_rule_template} => Types::ApprovalRuleTemplate
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateApprovalRuleTemplateName AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4605
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4629
   def update_approval_rule_template_name(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Replaces the contents of a comment.
@@ -2951,7 +2951,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdateCommentOutput#comment #comment} => Types::Comment
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateComment AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4649
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4673
   def update_comment(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Sets or changes the default branch name for the specified repository.
@@ -2975,21 +2975,13 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateDefaultBranch AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4682
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4706
   def update_default_branch(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the structure of an approval rule created specifically for a
   # pull request. For example, you can change the number of required
   # approvers and the approval pool for approvers.
   #
-  # @example Request syntax with placeholder values
-  #
-  #   resp = client.update_pull_request_approval_rule_content({
-  #   pull_request_id: "PullRequestId", # required
-  #   approval_rule_name: "ApprovalRuleName", # required
-  #   existing_rule_content_sha_256: "RuleContentSha256",
-  #   new_rule_content: "ApprovalRuleContent", # required
-  #   })
   # @example Response structure
   #
   #   resp.approval_rule.approval_rule_id #=> String
@@ -3001,6 +2993,14 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   resp.approval_rule.last_modified_user #=> String
   #   resp.approval_rule.origin_approval_rule_template.approval_rule_template_id #=> String
   #   resp.approval_rule.origin_approval_rule_template.approval_rule_template_name #=> String
+  # @example Request syntax with placeholder values
+  #
+  #   resp = client.update_pull_request_approval_rule_content({
+  #   pull_request_id: "PullRequestId", # required
+  #   approval_rule_name: "ApprovalRuleName", # required
+  #   existing_rule_content_sha_256: "RuleContentSha256",
+  #   new_rule_content: "ApprovalRuleContent", # required
+  #   })
   # @option params
   # @option params
   # @option params
@@ -3012,7 +3012,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdatePullRequestApprovalRuleContentOutput#approval_rule #approval_rule} => Types::ApprovalRule
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdatePullRequestApprovalRuleContent AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4768
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4792
   def update_pull_request_approval_rule_content(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the state of a user's approval on a pull request. The user is
@@ -3033,7 +3033,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdatePullRequestApprovalState AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4799
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4823
   def update_pull_request_approval_state(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Replaces the contents of the description of a pull request.
@@ -3085,7 +3085,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdatePullRequestDescriptionOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdatePullRequestDescription AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4862
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4886
   def update_pull_request_description(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the status of a pull request.
@@ -3137,7 +3137,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdatePullRequestStatusOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdatePullRequestStatus AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4926
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4950
   def update_pull_request_status(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Replaces the title of a pull request.
@@ -3189,7 +3189,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdatePullRequestTitleOutput#pull_request #pull_request} => Types::PullRequest
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdatePullRequestTitle AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#4989
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5013
   def update_pull_request_title(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Sets or changes the comment or description for a repository.
@@ -3216,7 +3216,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateRepositoryDescription AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5026
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5050
   def update_repository_description(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the Key Management Service encryption key used to encrypt and
@@ -3244,7 +3244,7 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   #   * {Types::UpdateRepositoryEncryptionKeyOutput#original_kms_key_id #original_kms_key_id} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateRepositoryEncryptionKey AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5072
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5096
   def update_repository_encryption_key(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Renames a repository. The repository name must be unique across the
@@ -3271,24 +3271,24 @@ class Aws::CodeCommit::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateRepositoryName AWS API Documentation
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5107
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5131
   def update_repository_name(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # @api private
   # @deprecated
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5131
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5155
   def waiter_names; end
 
   class << self
     # @api private
     #
-    # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5141
+    # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5165
     def errors_module; end
 
     # @api private
     #
-    # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5138
+    # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/client.rb#5162
     def identifier; end
   end
 end
@@ -9300,29 +9300,29 @@ module Aws::CodeCommit::Plugins; end
 
 # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#13
 class Aws::CodeCommit::Plugins::Endpoints < ::Seahorse::Client::Plugin
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#222
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#223
   def add_handlers(handlers, _config); end
 end
 
 # @api private
 #
-# source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#26
+# source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#27
 class Aws::CodeCommit::Plugins::Endpoints::Handler < ::Seahorse::Client::Handler
   # @api private
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#27
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#28
   def call(context); end
 
   private
 
   # @api private
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#47
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#48
   def apply_endpoint_headers(context, headers); end
 
   # @api private
   #
-  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#58
+  # source://aws-sdk-codecommit//lib/aws-sdk-codecommit/plugins/endpoints.rb#59
   def parameters_for_operation(context); end
 end
 

@@ -47,14 +47,14 @@ module Aws::ECR; end
 #
 # See {#initialize} for a full list of supported configuration options.
 #
-# source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#52
+# source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#53
 class Aws::ECR::Client < ::Seahorse::Client::Base
   include ::Aws::ClientStubs
 
   # @overload initialize
   # @return [Client] a new instance of Client
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#395
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#419
   def initialize(*args); end
 
   # Checks the availability of one or more image layers in a repository.
@@ -98,7 +98,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::BatchCheckLayerAvailabilityResponse#failures #failures} => Array&lt;Types::LayerFailure&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/BatchCheckLayerAvailability AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#454
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#478
   def batch_check_layer_availability(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a list of specified images within a repository. Images are
@@ -169,7 +169,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::BatchDeleteImageResponse#failures #failures} => Array&lt;Types::ImageFailure&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/BatchDeleteImage AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#542
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#566
   def batch_delete_image(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets detailed information for an image. Images are specified with
@@ -247,7 +247,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::BatchGetImageResponse#failures #failures} => Array&lt;Types::ImageFailure&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/BatchGetImage AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#643
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#667
   def batch_get_image(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Gets the scanning configuration for one or more repositories.
@@ -280,13 +280,13 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::BatchGetRepositoryScanningConfigurationResponse#failures #failures} => Array&lt;Types::RepositoryScanningConfigurationFailure&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/BatchGetRepositoryScanningConfiguration AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#683
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#707
   def batch_get_repository_scanning_configuration(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # @api private
   # @param params [{}]
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3005
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3029
   def build_request(operation_name, params = T.unsafe(nil)); end
 
   # Informs Amazon ECR that the image layer upload has completed for a
@@ -331,7 +331,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::CompleteLayerUploadResponse#layer_digest #layer_digest} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CompleteLayerUpload AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#744
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#768
   def complete_layer_upload(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a pull through cache rule. A pull through cache rule provides
@@ -377,7 +377,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::CreatePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CreatePullThroughCacheRule AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#825
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#849
   def create_pull_through_cache_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates a repository. For more information, see [Amazon ECR
@@ -449,7 +449,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::CreateRepositoryResponse#repository #repository} => Types::Repository
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/CreateRepository AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#935
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#959
   def create_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes the lifecycle policy associated with the specified repository.
@@ -478,7 +478,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteLifecyclePolicyResponse#last_evaluated_at #last_evaluated_at} => Time
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeleteLifecyclePolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#975
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#999
   def delete_lifecycle_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a pull through cache rule.
@@ -509,7 +509,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DeletePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeletePullThroughCacheRule AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1018
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1042
   def delete_pull_through_cache_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes the registry permissions policy.
@@ -526,7 +526,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteRegistryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeleteRegistryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1039
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1063
   def delete_registry_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes a repository. If the repository isn't empty, you must either
@@ -580,7 +580,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteRepositoryResponse#repository #repository} => Types::Repository
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeleteRepository AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1110
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1134
   def delete_repository(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes the repository policy associated with the specified
@@ -622,7 +622,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DeleteRepositoryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DeleteRepositoryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1166
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1190
   def delete_repository_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the replication status for a specified image.
@@ -659,7 +659,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeImageReplicationStatusResponse#replication_statuses #replication_statuses} => Array&lt;Types::ImageReplicationStatus&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribeImageReplicationStatus AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1216
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1240
   def describe_image_replication_status(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the scan findings for the specified image.
@@ -779,7 +779,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeImageScanFindingsResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribeImageScanFindings AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1368
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1392
   def describe_image_scan_findings(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns metadata about the images in a repository.
@@ -845,7 +845,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeImagesResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribeImages AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1467
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1491
   def describe_images(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Returns the pull through cache rules for a registry.
@@ -883,7 +883,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribePullThroughCacheRulesResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribePullThroughCacheRules AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1536
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1560
   def describe_pull_through_cache_rules(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Describes the settings for a registry. The replication configuration
@@ -908,7 +908,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeRegistryResponse#replication_configuration #replication_configuration} => Types::ReplicationConfiguration
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribeRegistry AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1565
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1589
   def describe_registry(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Describes image repositories in a registry.
@@ -971,7 +971,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::DescribeRepositoriesResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/DescribeRepositories AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1667
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1691
   def describe_repositories(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves an authorization token. An authorization token represents
@@ -1026,7 +1026,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetAuthorizationTokenResponse#authorization_data #authorization_data} => Array&lt;Types::AuthorizationData&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetAuthorizationToken AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1733
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1757
   def get_authorization_token(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the pre-signed Amazon S3 download URL corresponding to an
@@ -1064,7 +1064,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetDownloadUrlForLayerResponse#layer_digest #layer_digest} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetDownloadUrlForLayer AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1785
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1809
   def get_download_url_for_layer(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the lifecycle policy for the specified repository.
@@ -1093,7 +1093,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetLifecyclePolicyResponse#last_evaluated_at #last_evaluated_at} => Time
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetLifecyclePolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1825
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1849
   def get_lifecycle_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the results of the lifecycle policy preview request for the
@@ -1156,7 +1156,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetLifecyclePolicyPreviewResponse#summary #summary} => Types::LifecyclePolicyPreviewSummary
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetLifecyclePolicyPreview AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1925
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1949
   def get_lifecycle_policy_preview(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the permissions policy for a registry.
@@ -1173,7 +1173,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetRegistryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetRegistryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1946
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1970
   def get_registry_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the scanning configuration for a registry.
@@ -1195,7 +1195,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetRegistryScanningConfigurationResponse#scanning_configuration #scanning_configuration} => Types::RegistryScanningConfiguration
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetRegistryScanningConfiguration AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1972
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#1996
   def get_registry_scanning_configuration(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Retrieves the repository policy for the specified repository.
@@ -1236,7 +1236,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::GetRepositoryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/GetRepositoryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2026
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2050
   def get_repository_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Notifies Amazon ECR that you intend to upload an image layer.
@@ -1272,7 +1272,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::InitiateLayerUploadResponse#part_size #part_size} => Integer
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/InitiateLayerUpload AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2073
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2097
   def initiate_layer_upload(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Lists all the image IDs for the specified repository.
@@ -1333,7 +1333,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::ListImagesResponse#next_token #next_token} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/ListImages AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2171
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2195
   def list_images(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # List the tags for an Amazon ECR resource.
@@ -1356,7 +1356,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::ListTagsForResourceResponse#tags #tags} => Array&lt;Types::Tag&gt;
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/ListTagsForResource AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2203
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2227
   def list_tags_for_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates or updates the image manifest and tags associated with an
@@ -1403,7 +1403,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutImageResponse#image #image} => Types::Image
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutImage AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2273
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2297
   def put_image(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # The `PutImageScanningConfiguration` API is being deprecated, in favor
@@ -1438,7 +1438,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutImageScanningConfigurationResponse#image_scanning_configuration #image_scanning_configuration} => Types::ImageScanningConfiguration
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutImageScanningConfiguration AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2325
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2349
   def put_image_scanning_configuration(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates the image tag mutability settings for the specified
@@ -1473,7 +1473,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutImageTagMutabilityResponse#image_tag_mutability #image_tag_mutability} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutImageTagMutability AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2378
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2402
   def put_image_tag_mutability(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates or updates the lifecycle policy for the specified repository.
@@ -1507,7 +1507,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutLifecyclePolicyResponse#lifecycle_policy_text #lifecycle_policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutLifecyclePolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2425
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2449
   def put_lifecycle_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates or updates the permissions policy for your registry.
@@ -1539,7 +1539,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutRegistryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutRegistryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2471
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2495
   def put_registry_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates or updates the scanning configuration for your private
@@ -1578,7 +1578,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutRegistryScanningConfigurationResponse#registry_scanning_configuration #registry_scanning_configuration} => Types::RegistryScanningConfiguration
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutRegistryScanningConfiguration AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2533
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2557
   def put_registry_scanning_configuration(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Creates or updates the replication configuration for a registry. The
@@ -1639,7 +1639,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::PutReplicationConfigurationResponse#replication_configuration #replication_configuration} => Types::ReplicationConfiguration
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/PutReplicationConfiguration AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2601
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2625
   def put_replication_configuration(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Applies a repository policy to the specified repository to control
@@ -1676,7 +1676,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::SetRepositoryPolicyResponse#policy_text #policy_text} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/SetRepositoryPolicy AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2662
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2686
   def set_repository_policy(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Starts an image vulnerability scan. An image scan can only be started
@@ -1719,7 +1719,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::StartImageScanResponse#image_scan_status #image_scan_status} => Types::ImageScanStatus
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/StartImageScan AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2719
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2743
   def start_image_scan(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Starts a preview of a lifecycle policy for the specified repository.
@@ -1752,7 +1752,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::StartLifecyclePolicyPreviewResponse#status #status} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/StartLifecyclePolicyPreview AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2766
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2790
   def start_lifecycle_policy_preview(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Adds specified tags to a resource with the specified ARN. Existing
@@ -1777,7 +1777,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/TagResource AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2803
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2827
   def tag_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Deletes specified tags from a resource.
@@ -1795,7 +1795,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UntagResource AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2831
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2855
   def untag_resource(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Updates an existing pull through cache rule.
@@ -1826,7 +1826,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::UpdatePullThroughCacheRuleResponse#credential_arn #credential_arn} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UpdatePullThroughCacheRule AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2878
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2902
   def update_pull_through_cache_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Uploads an image layer part to Amazon ECR.
@@ -1874,7 +1874,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::UploadLayerPartResponse#last_byte_received #last_byte_received} => Integer
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/UploadLayerPart AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2948
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2972
   def upload_layer_part(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Validates an existing pull through cache rule for an upstream registry
@@ -1911,7 +1911,7 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   #   * {Types::ValidatePullThroughCacheRuleResponse#failure #failure} => String
   # @see http://docs.aws.amazon.com/goto/WebAPI/ecr-2015-09-21/ValidatePullThroughCacheRule AWS API Documentation
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#2996
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3020
   def validate_pull_through_cache_rule(params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Polls an API operation until a resource enters a desired state.
@@ -2001,13 +2001,13 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   # @return [Boolean] Returns `true` if the waiter was successful.
   # @yield [w.waiter]
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3107
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3131
   def wait_until(waiter_name, params = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # @api private
   # @deprecated
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3115
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3139
   def waiter_names; end
 
   private
@@ -2015,21 +2015,21 @@ class Aws::ECR::Client < ::Seahorse::Client::Base
   # @param waiter_name [Symbol]
   # @param options [Hash] ({})
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3123
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3147
   def waiter(waiter_name, options = T.unsafe(nil)); end
 
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3132
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3156
   def waiters; end
 
   class << self
     # @api private
     #
-    # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3145
+    # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3169
     def errors_module; end
 
     # @api private
     #
-    # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3142
+    # source://aws-sdk-ecr//lib/aws-sdk-ecr/client.rb#3166
     def identifier; end
   end
 end
@@ -4889,29 +4889,29 @@ module Aws::ECR::Plugins; end
 
 # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#13
 class Aws::ECR::Plugins::Endpoints < ::Seahorse::Client::Plugin
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#150
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#151
   def add_handlers(handlers, _config); end
 end
 
 # @api private
 #
-# source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#26
+# source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#27
 class Aws::ECR::Plugins::Endpoints::Handler < ::Seahorse::Client::Handler
   # @api private
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#27
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#28
   def call(context); end
 
   private
 
   # @api private
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#47
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#48
   def apply_endpoint_headers(context, headers); end
 
   # @api private
   #
-  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#58
+  # source://aws-sdk-ecr//lib/aws-sdk-ecr/plugins/endpoints.rb#59
   def parameters_for_operation(context); end
 end
 

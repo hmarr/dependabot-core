@@ -10,70 +10,70 @@
 # source://rspec-mocks//lib/rspec/mocks/instance_method_stasher.rb#1
 module RSpec
   class << self
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#70
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#70
     def clear_examples; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#85
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#85
     def configuration; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#49
     def configuration=(_arg0); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#97
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#97
     def configure; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#194
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#194
     def const_missing(name); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def context(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#122
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#122
     def current_example; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#128
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#128
     def current_example=(example); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#154
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#154
     def current_scope; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#134
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#134
     def current_scope=(scope); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def describe(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def example_group(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def fcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def fdescribe(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#58
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#58
     def reset; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.13.0/lib/rspec/core/shared_example_group.rb#110
     def shared_context(name, *args, &block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.13.0/lib/rspec/core/shared_example_group.rb#110
     def shared_examples(name, *args, &block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.13.0/lib/rspec/core/shared_example_group.rb#110
     def shared_examples_for(name, *args, &block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#160
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#160
     def world; end
 
-    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
+    # source://rspec-core/3.13.0/lib/rspec/core.rb#49
     def world=(_arg0); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def xcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.13.0/lib/rspec/core/dsl.rb#42
     def xdescribe(*args, &example_group_block); end
   end
 end
@@ -815,46 +815,46 @@ class RSpec::Mocks::AnyInstance::Recorder
 
   private
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#280
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#282
   def allow_no_prepended_module_definition_of(method_name); end
 
   # @return [Boolean]
   #
   # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#159
-  def ancestor_is_an_observer?(method_name); end
+  def ancestor_is_an_observer?(ancestor, method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#233
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#235
   def backup_method!(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#267
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#269
   def mark_invoked!(method_name); end
 
   # @yield [args.first, args]
   #
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#176
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#178
   def normalize_chain(*args); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#247
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#249
   def observe!(method_name); end
 
   # @return [Boolean]
   #
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#243
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#245
   def public_protected_or_private_method_defined?(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#181
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#183
   def received_expected_message!(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#227
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#229
   def remove_dummy_method!(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#187
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#189
   def restore_method!(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#195
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#197
   def restore_original_method!(method_name); end
 
-  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#168
+  # source://rspec-mocks//lib/rspec/mocks/any_instance/recorder.rb#166
   def super_class_observers_for(method_name); end
 
   # @return [Boolean]
@@ -1040,7 +1040,7 @@ module RSpec::Mocks::ArgumentMatchers
   # @example
   #   expect(object).to receive(:message).with(kind_of(Thing))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#111
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#121
   def a_kind_of(klass); end
 
   # Matches if `arg.instance_of?(klass)`
@@ -1048,7 +1048,7 @@ module RSpec::Mocks::ArgumentMatchers
   # @example
   #   expect(object).to receive(:message).with(instance_of(Thing))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#101
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#111
   def an_instance_of(klass); end
 
   # Acts like an arg splat, matching any number of args at any point in an arg list.
@@ -1072,6 +1072,15 @@ module RSpec::Mocks::ArgumentMatchers
   # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#34
   def anything; end
 
+  # Matches an array that excludes the specified items.
+  #
+  # @example
+  #   expect(object).to receive(:message).with(array_excluding(1,2,3))
+  #   expect(object).to receive(:message).with(array_excluding([1,2,3]))
+  #
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#100
+  def array_excluding(*args); end
+
   # Matches an array that includes the specified items at least once.
   # Ignores duplicates and additional values
   #
@@ -1079,7 +1088,7 @@ module RSpec::Mocks::ArgumentMatchers
   #   expect(object).to receive(:message).with(array_including(1,2,3))
   #   expect(object).to receive(:message).with(array_including([1,2,3]))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#80
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#90
   def array_including(*args); end
 
   # Matches a boolean value.
@@ -1106,7 +1115,7 @@ module RSpec::Mocks::ArgumentMatchers
   #   expect(object).to receive(:message).with(hash_excluding(:key))
   #   expect(object).to receive(:message).with(hash_excluding(:key, :key2 => :val2))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#91
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#80
   def hash_excluding(*args); end
 
   # Matches a hash that includes the specified key(s) or key/value pairs.
@@ -1127,7 +1136,7 @@ module RSpec::Mocks::ArgumentMatchers
   #   expect(object).to receive(:message).with(hash_excluding(:key))
   #   expect(object).to receive(:message).with(hash_excluding(:key, :key2 => :val2))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#91
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#80
   def hash_not_including(*args); end
 
   # Matches if `arg.instance_of?(klass)`
@@ -1135,7 +1144,7 @@ module RSpec::Mocks::ArgumentMatchers
   # @example
   #   expect(object).to receive(:message).with(instance_of(Thing))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#101
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#111
   def instance_of(klass); end
 
   # Matches if `arg.kind_of?(klass)`
@@ -1143,7 +1152,7 @@ module RSpec::Mocks::ArgumentMatchers
   # @example
   #   expect(object).to receive(:message).with(kind_of(Thing))
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#111
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#121
   def kind_of(klass); end
 
   # Matches no arguments.
@@ -1157,171 +1166,192 @@ module RSpec::Mocks::ArgumentMatchers
   class << self
     # @private
     #
-    # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#118
+    # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#128
     def anythingize_lonely_keys(*args); end
   end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#149
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#159
 class RSpec::Mocks::ArgumentMatchers::AnyArgMatcher < ::RSpec::Mocks::ArgumentMatchers::SingletonMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#150
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#160
   def ===(_other); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#154
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#164
   def description; end
 end
 
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#137
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#147
 RSpec::Mocks::ArgumentMatchers::AnyArgMatcher::INSTANCE = T.let(T.unsafe(nil), RSpec::Mocks::ArgumentMatchers::AnyArgMatcher)
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#142
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#152
 class RSpec::Mocks::ArgumentMatchers::AnyArgsMatcher < ::RSpec::Mocks::ArgumentMatchers::SingletonMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#143
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#153
   def description; end
 end
 
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#137
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#147
 RSpec::Mocks::ArgumentMatchers::AnyArgsMatcher::INSTANCE = T.let(T.unsafe(nil), RSpec::Mocks::ArgumentMatchers::AnyArgsMatcher)
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#232
-class RSpec::Mocks::ArgumentMatchers::ArrayIncludingMatcher
-  # @return [ArrayIncludingMatcher] a new instance of ArrayIncludingMatcher
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#274
+class RSpec::Mocks::ArgumentMatchers::ArrayExcludingMatcher
+  # @return [ArrayExcludingMatcher] a new instance of ArrayExcludingMatcher
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#233
-  def initialize(expected); end
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#275
+  def initialize(unexpected); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#237
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#279
   def ===(actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#248
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#292
   def description; end
 
   private
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#254
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#298
+  def formatted_unexpected_values; end
+end
+
+# @private
+#
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#242
+class RSpec::Mocks::ArgumentMatchers::ArrayIncludingMatcher
+  # @return [ArrayIncludingMatcher] a new instance of ArrayIncludingMatcher
+  #
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#243
+  def initialize(expected); end
+
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#247
+  def ===(actual); end
+
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#260
+  def description; end
+
+  private
+
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#266
   def formatted_expected_values; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#178
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#188
 class RSpec::Mocks::ArgumentMatchers::BaseHashMatcher
   # @return [BaseHashMatcher] a new instance of BaseHashMatcher
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#179
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#189
   def initialize(expected); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#183
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#193
   def ===(predicate, actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#191
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#201
   def description(name); end
 
   private
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#197
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#207
   def formatted_expected_hash; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#167
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#177
 class RSpec::Mocks::ArgumentMatchers::BooleanMatcher < ::RSpec::Mocks::ArgumentMatchers::SingletonMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#168
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#178
   def ===(value); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#172
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#182
   def description; end
 end
 
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#137
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#147
 RSpec::Mocks::ArgumentMatchers::BooleanMatcher::INSTANCE = T.let(T.unsafe(nil), RSpec::Mocks::ArgumentMatchers::BooleanMatcher)
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#262
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#306
 class RSpec::Mocks::ArgumentMatchers::DuckTypeMatcher
   # @return [DuckTypeMatcher] a new instance of DuckTypeMatcher
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#263
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#307
   def initialize(*methods_to_respond_to); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#267
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#311
   def ===(value); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#271
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#315
   def description; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#221
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#231
 class RSpec::Mocks::ArgumentMatchers::HashExcludingMatcher < ::RSpec::Mocks::ArgumentMatchers::BaseHashMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#222
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#232
   def ===(actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#226
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#236
   def description; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#210
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#220
 class RSpec::Mocks::ArgumentMatchers::HashIncludingMatcher < ::RSpec::Mocks::ArgumentMatchers::BaseHashMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#211
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#221
   def ===(actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#215
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#225
   def description; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#277
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#321
 class RSpec::Mocks::ArgumentMatchers::InstanceOf
   # @return [InstanceOf] a new instance of InstanceOf
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#278
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#322
   def initialize(klass); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#282
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#326
   def ===(actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#286
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#330
   def description; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#292
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#336
 class RSpec::Mocks::ArgumentMatchers::KindOf
   # @return [KindOf] a new instance of KindOf
   #
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#293
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#337
   def initialize(klass); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#297
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#341
   def ===(actual); end
 
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#301
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#345
   def description; end
 end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#160
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#170
 class RSpec::Mocks::ArgumentMatchers::NoArgsMatcher < ::RSpec::Mocks::ArgumentMatchers::SingletonMatcher
-  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#161
+  # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#171
   def description; end
 end
 
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#137
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#147
 RSpec::Mocks::ArgumentMatchers::NoArgsMatcher::INSTANCE = T.let(T.unsafe(nil), RSpec::Mocks::ArgumentMatchers::NoArgsMatcher)
 
 # Intended to be subclassed by stateless, immutable argument matchers.
@@ -1334,12 +1364,12 @@ RSpec::Mocks::ArgumentMatchers::NoArgsMatcher::INSTANCE = T.let(T.unsafe(nil), R
 #
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#133
+# source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#143
 class RSpec::Mocks::ArgumentMatchers::SingletonMatcher
   class << self
     # @private
     #
-    # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#136
+    # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#146
     def inherited(subklass); end
 
     private

@@ -31,7 +31,7 @@ class TurboTests::CLI
   def run; end
 end
 
-# source://turbo_tests//lib/turbo_tests.rb#53
+# source://turbo_tests//lib/turbo_tests.rb#55
 class TurboTests::FakeExample < ::Struct
   # Returns the value of attribute description
   #
@@ -99,13 +99,13 @@ class TurboTests::FakeExample < ::Struct
   # @return [Object] the newly set value
   def metadata=(_); end
 
-  # source://turbo_tests//lib/turbo_tests.rb#77
+  # source://turbo_tests//lib/turbo_tests.rb#79
   def notification; end
 
   class << self
     def [](*_arg0); end
 
-    # source://turbo_tests//lib/turbo_tests.rb#55
+    # source://turbo_tests//lib/turbo_tests.rb#57
     def from_obj(obj); end
 
     def inspect; end
@@ -115,7 +115,7 @@ class TurboTests::FakeExample < ::Struct
   end
 end
 
-# source://turbo_tests//lib/turbo_tests.rb#19
+# source://turbo_tests//lib/turbo_tests.rb#21
 class TurboTests::FakeException < ::Struct
   # Returns the value of attribute backtrace
   #
@@ -153,7 +153,7 @@ class TurboTests::FakeException < ::Struct
   class << self
     def [](*_arg0); end
 
-    # source://turbo_tests//lib/turbo_tests.rb#21
+    # source://turbo_tests//lib/turbo_tests.rb#23
     def from_obj(obj); end
 
     def inspect; end
@@ -163,7 +163,7 @@ class TurboTests::FakeException < ::Struct
   end
 end
 
-# source://turbo_tests//lib/turbo_tests.rb#39
+# source://turbo_tests//lib/turbo_tests.rb#41
 class TurboTests::FakeExecutionResult < ::Struct
   # Returns the value of attribute example_skipped?
   #
@@ -222,7 +222,7 @@ class TurboTests::FakeExecutionResult < ::Struct
   class << self
     def [](*_arg0); end
 
-    # source://turbo_tests//lib/turbo_tests.rb#41
+    # source://turbo_tests//lib/turbo_tests.rb#43
     def from_obj(obj); end
 
     def inspect; end
@@ -374,19 +374,19 @@ class TurboTests::Runner
 
   private
 
-  # source://turbo_tests//lib/turbo_tests/runner.rb#273
+  # source://turbo_tests//lib/turbo_tests/runner.rb#277
   def fail_fast_met; end
 
-  # source://turbo_tests//lib/turbo_tests/runner.rb#223
+  # source://turbo_tests//lib/turbo_tests/runner.rb#227
   def handle_messages; end
 
-  # source://turbo_tests//lib/turbo_tests/runner.rb#277
+  # source://turbo_tests//lib/turbo_tests/runner.rb#281
   def report_number_of_tests(groups); end
 
   # source://turbo_tests//lib/turbo_tests/runner.rb#114
   def setup_tmp_dir; end
 
-  # source://turbo_tests//lib/turbo_tests/runner.rb#210
+  # source://turbo_tests//lib/turbo_tests/runner.rb#214
   def start_copy_thread(src, dst); end
 
   # source://turbo_tests//lib/turbo_tests/runner.rb#123

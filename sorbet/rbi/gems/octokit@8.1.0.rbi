@@ -174,12 +174,15 @@ class Octokit::Client
   include ::Octokit::Client::ActionsArtifacts
   include ::Octokit::Client::ActionsSecrets
   include ::Octokit::Client::Checks
+  include ::Octokit::Client::CodeScanning
+  include ::Octokit::Client::CodespacesSecrets
   include ::Octokit::Client::Commits
   include ::Octokit::Client::CommitComments
   include ::Octokit::Client::CommitPulls
   include ::Octokit::Client::CommitBranches
   include ::Octokit::Client::CommunityProfile
   include ::Octokit::Client::Contents
+  include ::Octokit::Client::DependabotSecrets
   include ::Octokit::Client::Deployments
   include ::Octokit::Client::Downloads
   include ::Octokit::Client::Environments
@@ -228,14 +231,14 @@ class Octokit::Client
 
   # @return [Client] a new instance of Client
   #
-  # source://octokit//lib/octokit/client.rb#137
+  # source://octokit//lib/octokit/client.rb#143
   def initialize(options = T.unsafe(nil)); end
 
   # Set OAuth access token for authentication
   #
   # @param value [String] 40 character GitHub OAuth access token
   #
-  # source://octokit//lib/octokit/client.rb#222
+  # source://octokit//lib/octokit/client.rb#228
   def access_token=(value); end
 
   # Duplicate client using client_id and client_secret as
@@ -254,59 +257,59 @@ class Octokit::Client
   #   end
   # @yield [app_client]
   #
-  # source://octokit//lib/octokit/client.rb#190
+  # source://octokit//lib/octokit/client.rb#196
   def as_app(key = T.unsafe(nil), secret = T.unsafe(nil)); end
 
   # Set Bearer Token for authentication
   #
   # @param value [String] JWT
   #
-  # source://octokit//lib/octokit/client.rb#230
+  # source://octokit//lib/octokit/client.rb#236
   def bearer_token=(value); end
 
   # Set OAuth app client_id
   #
   # @param value [String] 20 character GitHub OAuth app client_id
   #
-  # source://octokit//lib/octokit/client.rb#238
+  # source://octokit//lib/octokit/client.rb#244
   def client_id=(value); end
 
   # Set OAuth app client_secret
   #
   # @param value [String] 40 character GitHub OAuth app client_secret
   #
-  # source://octokit//lib/octokit/client.rb#246
+  # source://octokit//lib/octokit/client.rb#252
   def client_secret=(value); end
 
-  # source://octokit//lib/octokit/client.rb#251
+  # source://octokit//lib/octokit/client.rb#257
   def client_without_redirects(options = T.unsafe(nil)); end
 
   # Text representation of the client, masking tokens and passwords
   #
   # @return [String]
   #
-  # source://octokit//lib/octokit/client.rb#157
+  # source://octokit//lib/octokit/client.rb#163
   def inspect; end
 
   # Set username for authentication
   #
   # @param value [String] GitHub username
   #
-  # source://octokit//lib/octokit/client.rb#206
+  # source://octokit//lib/octokit/client.rb#212
   def login=(value); end
 
   # Set password for authentication
   #
   # @param value [String] GitHub password
   #
-  # source://octokit//lib/octokit/client.rb#214
+  # source://octokit//lib/octokit/client.rb#220
   def password=(value); end
 
   private
 
   # convenience method for constructing a user specific path, if the user is logged in
   #
-  # source://octokit//lib/octokit/client/users.rb#427
+  # source://octokit//lib/octokit/client/users.rb#454
   def user_path(user, path); end
 end
 
@@ -372,6 +375,17 @@ end
 #
 # source://octokit//lib/octokit/client/actions_secrets.rb#8
 module Octokit::Client::ActionsSecrets
+  # Create or update an environment secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param environment [String] Name of environment
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://docs.github.com/en/rest/actions/secrets#create-or-update-an-environment-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#147
+  def create_or_update_actions_environment_secret(repo, environment, name, options); end
+
   # Create or update secrets
   #
   # @param repo [Integer, String, Hash, Repository] A GitHub repository
@@ -379,8 +393,28 @@ module Octokit::Client::ActionsSecrets
   # @param options [Hash] encrypted_value and key_id
   # @see https://developer.github.com/v3/actions/secrets/#create-or-update-a-secret-for-a-repository
   #
-  # source://octokit//lib/octokit/client/actions_secrets.rb#45
-  def create_or_update_secret(repo, name, options); end
+  # source://octokit//lib/octokit/client/actions_secrets.rb#75
+  def create_or_update_actions_secret(repo, name, options); end
+
+  # Create or update org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://developer.github.com/v3/actions/secrets/#create-or-update-a-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#85
+  def create_or_update_org_actions_secret(org, name, options); end
+
+  # Delete environment secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param environment [String] Name of environment
+  # @param name [String] Name of secret
+  # @see https://docs.github.com/en/rest/actions/secrets#delete-an-environment-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#156
+  def delete_actions_environment_secret(repo, environment, name); end
 
   # Delete a secret
   #
@@ -388,8 +422,38 @@ module Octokit::Client::ActionsSecrets
   # @param name [String] Name of secret
   # @see https://developer.github.com/v3/actions/secrets/#delete-a-secret-from-a-repository
   #
-  # source://octokit//lib/octokit/client/actions_secrets.rb#54
-  def delete_secret(repo, name); end
+  # source://octokit//lib/octokit/client/actions_secrets.rb#94
+  def delete_actions_secret(repo, name); end
+
+  # Delete an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @see https://developer.github.com/v3/actions/secrets/#delete-a-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#103
+  def delete_org_actions_secret(org, name); end
+
+  # Get environment public key for secrets encryption
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param environment [String] Name of environment
+  # @return [Hash] key_id and key
+  # @see https://docs.github.com/en/rest/actions/secrets#get-an-environment-public-key
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#113
+  def get_actions_environment_public_key(repo, environment); end
+
+  # Get an environment secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param environment [String] Name of environment
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at and updated_at
+  # @see https://docs.github.com/en/rest/actions/secrets#get-an-environment-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#136
+  def get_actions_environment_secret(repo, environment, name); end
 
   # Get public key for secrets encryption
   #
@@ -398,7 +462,7 @@ module Octokit::Client::ActionsSecrets
   # @see https://developer.github.com/v3/actions/secrets/#get-your-public-key
   #
   # source://octokit//lib/octokit/client/actions_secrets.rb#14
-  def get_public_key(repo); end
+  def get_actions_public_key(repo); end
 
   # Get a secret
   #
@@ -407,8 +471,37 @@ module Octokit::Client::ActionsSecrets
   # @return [Hash] name, created_at and updated_at
   # @see https://developer.github.com/v3/actions/secrets/#get-a-secret
   #
-  # source://octokit//lib/octokit/client/actions_secrets.rb#35
-  def get_secret(repo, name); end
+  # source://octokit//lib/octokit/client/actions_secrets.rb#55
+  def get_actions_secret(repo, name); end
+
+  # Get public key for secrets encryption
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] key_id and key
+  # @see https://developer.github.com/v3/actions/secrets/#get-your-public-key
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#23
+  def get_org_actions_public_key(org); end
+
+  # Get an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at and updated_at
+  # @see https://developer.github.com/v3/actions/secrets/#get-a-secret
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#65
+  def get_org_actions_secret(org, name); end
+
+  # List environment secrets
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param environment [String] Name of environment
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://developer.github.com/v3/actions/secrets/#list-environment-secrets
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#123
+  def list_actions_environment_secrets(repo, environment); end
 
   # List secrets
   #
@@ -416,8 +509,17 @@ module Octokit::Client::ActionsSecrets
   # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
   # @see https://developer.github.com/v3/actions/secrets/#list-secrets-for-a-repository
   #
-  # source://octokit//lib/octokit/client/actions_secrets.rb#23
-  def list_secrets(repo); end
+  # source://octokit//lib/octokit/client/actions_secrets.rb#32
+  def list_actions_secrets(repo); end
+
+  # List org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+  #
+  # source://octokit//lib/octokit/client/actions_secrets.rb#43
+  def list_org_actions_secrets(org); end
 end
 
 # Methods for the Actions Workflows jobs API
@@ -765,6 +867,16 @@ module Octokit::Client::Apps
   # source://octokit//lib/octokit/client/apps.rb#217
   def delete_installation(installation, options = T.unsafe(nil)); end
 
+  # Redeliver a delivery for the webhook configured for a GitHub App.
+  #
+  # @param delivery_id [Integer] The id of a GitHub App Hook Delivery
+  # @param options [Hash] A customizable set of options
+  # @return [Boolean] Success
+  # @see https://developer.github.com/v3/apps/#redeliver-a-delivery-for-an-app-webhook
+  #
+  # source://octokit//lib/octokit/client/apps.rb#242
+  def deliver_app_hook(delivery_id, options = T.unsafe(nil)); end
+
   # Find all installations that belong to an App
   #
   # @param options [Hash] A customizable set of options
@@ -844,6 +956,15 @@ module Octokit::Client::Apps
   # source://octokit//lib/octokit/client/apps.rb#60
   def installation(id, options = T.unsafe(nil)); end
 
+  # Returns a list of webhook deliveries for the webhook configured for a GitHub App.
+  #
+  # @param options [Hash] A customizable set of options
+  # @return [Array<Hash>] an array of hook deliveries
+  # @see https://docs.github.com/en/rest/apps/webhooks#list-deliveries-for-an-app-webhook
+  #
+  # source://octokit//lib/octokit/client/apps.rb#228
+  def list_app_hook_deliveries(options = T.unsafe(nil)); end
+
   # List repositories that are accessible to the authenticated installation
   #
   # @param options [Hash] A customizable set of options
@@ -893,7 +1014,7 @@ end
 
 # Header keys that can be passed in options hash to {#get},{#head}
 #
-# source://octokit//lib/octokit/client.rb#135
+# source://octokit//lib/octokit/client.rb#141
 Octokit::Client::CONVENIENCE_HEADERS = T.let(T.unsafe(nil), Set)
 
 # Methods for the Checks API
@@ -987,8 +1108,8 @@ module Octokit::Client::Checks
   #   result.check_suites[0].app.id # => 76765
   # @option options
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param ref [String] A SHA, branch name, or tag name
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param options [Hash] A set of optional filters
   # @return [Sawyer::Resource] A hash representing a collection of check suites
   # @see https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-specific-ref
@@ -1076,8 +1197,8 @@ module Octokit::Client::Checks
   #   result.check_suites[0].app.id # => 76765
   # @option options
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param ref [String] A SHA, branch name, or tag name
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param options [Hash] A set of optional filters
   # @return [Sawyer::Resource] A hash representing a collection of check suites
   # @see https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-specific-ref
@@ -1124,6 +1245,141 @@ module Octokit::Client::Checks
   #
   # source://octokit//lib/octokit/client/checks.rb#42
   def update_check_run(repo, id, options = T.unsafe(nil)); end
+end
+
+# Methods for the code scanning alerts API
+#
+# @see https://docs.github.com/rest/code-scanning
+#
+# source://octokit//lib/octokit/client/code_scanning.rb#12
+module Octokit::Client::CodeScanning
+  # Gets information about a SARIF upload
+  #
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
+  # @param sarif_id [String] The SARIF ID obtained after uploading
+  # @return [Sawyer::Resource] SARIF upload information
+  # @see https://docs.github.com/rest/code-scanning#get-information-about-a-sarif-upload
+  #
+  # source://octokit//lib/octokit/client/code_scanning.rb#37
+  def get_sarif_upload_information(repo, sarif_id, options = T.unsafe(nil)); end
+
+  # Uploads SARIF data containing the results of a code scanning analysis
+  #
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
+  # @param file [String] Path to the SARIF file to upload
+  # @param sha [String] The SHA of the commit to which the analysis you are uploading relates
+  # @param ref [String] The full Git reference, formatted as `refs/heads/<branch name>`, `refs/pull/<number>/merge`, or `refs/pull/<number>/head`
+  # @return [Sawyer::Resource] SARIF upload information
+  # @see https://docs.github.com/rest/code-scanning#upload-an-analysis-as-sarif-data
+  #
+  # source://octokit//lib/octokit/client/code_scanning.rb#22
+  def upload_sarif_data(repo, file, sha, ref, options = T.unsafe(nil)); end
+
+  private
+
+  # source://octokit//lib/octokit/client/code_scanning.rb#43
+  def compress_sarif_data(file); end
+end
+
+# Methods for the Codespaces Secrets API
+#
+# @see https://docs.github.com/en/rest/codespaces/
+#
+# source://octokit//lib/octokit/client/codespaces_secrets.rb#8
+module Octokit::Client::CodespacesSecrets
+  # Create or update secrets
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://docs.github.com/en/rest/codespaces/repository-secrets?apiVersion=2022-11-28#create-or-update-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#75
+  def create_or_update_codespaces_secret(repo, name, options); end
+
+  # Create or update org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://docs.github.com/en/rest/codespaces/organization-secrets?apiVersion=2022-11-28#create-or-update-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#85
+  def create_or_update_org_codespaces_secret(org, name, options); end
+
+  # Delete a secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @see https://docs.github.com/en/rest/codespaces/repository-secrets?apiVersion=2022-11-28#delete-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#94
+  def delete_codespaces_secret(repo, name); end
+
+  # Delete an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @see https://docs.github.com/en/rest/codespaces/organization-secrets?apiVersion=2022-11-28#delete-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#103
+  def delete_org_codespaces_secret(org, name); end
+
+  # Get public key for secrets encryption
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @return [Hash] key_id and key
+  # @see https://docs.github.com/en/rest/codespaces/repository-secrets#get-a-repository-public-key
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#14
+  def get_codespaces_public_key(repo); end
+
+  # Get a secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at, updated_at, and visibility
+  # @see https://docs.github.com/en/rest/codespaces/repository-secrets?apiVersion=2022-11-28#get-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#55
+  def get_codespaces_secret(repo, name); end
+
+  # Get public key for secrets encryption
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] key_id and key
+  # @see https://docs.github.com/en/rest/codespaces/organization-secrets?apiVersion=2022-11-28#get-an-organization-public-key
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#23
+  def get_org_codespaces_public_key(org); end
+
+  # Get an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at, updated_at, and visibility
+  # @see https://docs.github.com/en/rest/codespaces/organization-secrets?apiVersion=2022-11-28#get-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#65
+  def get_org_codespaces_secret(org, name); end
+
+  # List secrets
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://docs.github.com/en/rest/codespaces/repository-secrets?apiVersion=2022-11-28#list-repository-secrets
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#32
+  def list_codespaces_secrets(repo); end
+
+  # List org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://docs.github.com/en/rest/codespaces/organization-secrets?apiVersion=2022-11-28#list-organization-secrets
+  #
+  # source://octokit//lib/octokit/client/codespaces_secrets.rb#43
+  def list_org_codespaces_secrets(org); end
 end
 
 # Methods for the Branches for HEAD API
@@ -1182,9 +1438,9 @@ module Octokit::Client::CommitComments
   # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param sha [String] Sha of the commit to comment on
   # @param body [String] Message
-  # @param path [String] Relative path of file to comment on
   # @param line [Integer] Line number in the file to comment on
   # @param position [Integer] Line index in the diff to comment on
+  # @param path [String] Relative path of file to comment on
   # @return [Sawyer::Resource] Commit comment
   # @see https://developer.github.com/v3/repos/comments/#create-a-commit-comment
   #
@@ -1545,11 +1801,11 @@ module Octokit::Client::Contents
   #   "7eb95f97e1a0636015df3837478d3f15184a5f49",
   #   :branch => "my-new-feature")
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param path [String] A path for the content to delete
-  # @param message [String] A commit message for deleting the content
   # @param sha [String] The _blob sha_ of the content to delete
   # @param options [Hash] a customizable set of options
+  # @param message [String] A commit message for deleting the content
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Sawyer::Resource] The commit info for the delete
   # @see https://developer.github.com/v3/repos/contents/#delete-a-file
   #
@@ -1565,11 +1821,11 @@ module Octokit::Client::Contents
   #   "7eb95f97e1a0636015df3837478d3f15184a5f49",
   #   :branch => "my-new-feature")
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param path [String] A path for the content to delete
-  # @param message [String] A commit message for deleting the content
   # @param sha [String] The _blob sha_ of the content to delete
   # @param options [Hash] a customizable set of options
+  # @param message [String] A commit message for deleting the content
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Sawyer::Resource] The commit info for the delete
   # @see https://developer.github.com/v3/repos/contents/#delete-a-file
   #
@@ -1600,11 +1856,11 @@ module Octokit::Client::Contents
   #   "7eb95f97e1a0636015df3837478d3f15184a5f49",
   #   :branch => "my-new-feature")
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param path [String] A path for the content to delete
-  # @param message [String] A commit message for deleting the content
   # @param sha [String] The _blob sha_ of the content to delete
   # @param options [Hash] a customizable set of options
+  # @param message [String] A commit message for deleting the content
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Sawyer::Resource] The commit info for the delete
   # @see https://developer.github.com/v3/repos/contents/#delete-a-file
   #
@@ -1620,11 +1876,11 @@ module Octokit::Client::Contents
   #   "7eb95f97e1a0636015df3837478d3f15184a5f49",
   #   :branch => "my-new-feature")
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param path [String] A path for the content to delete
-  # @param message [String] A commit message for deleting the content
   # @param sha [String] The _blob sha_ of the content to delete
   # @param options [Hash] a customizable set of options
+  # @param message [String] A commit message for deleting the content
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Sawyer::Resource] The commit info for the delete
   # @see https://developer.github.com/v3/repos/contents/#delete-a-file
   #
@@ -1662,6 +1918,107 @@ module Octokit::Client::Contents
   #
   # source://octokit//lib/octokit/client/contents.rb#111
   def update_contents(*args); end
+end
+
+# Methods for the dependabot Secrets API
+#
+# @see https://docs.github.com/en/rest/dependabot/
+#
+# source://octokit//lib/octokit/client/dependabot_secrets.rb#8
+module Octokit::Client::DependabotSecrets
+  # Create or update secrets
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://docs.github.com/en/rest/dependabot/repository-secrets?apiVersion=2022-11-28#create-or-update-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#75
+  def create_or_update_dependabot_secret(repo, name, options); end
+
+  # Create or update org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @param options [Hash] encrypted_value and key_id
+  # @see https://docs.github.com/en/rest/dependabot/organization-secrets?apiVersion=2022-11-28#create-or-update-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#85
+  def create_or_update_org_dependabot_secret(org, name, options); end
+
+  # Delete a secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @see https://docs.github.com/en/rest/dependabot/repository-secrets?apiVersion=2022-11-28#delete-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#94
+  def delete_dependabot_secret(repo, name); end
+
+  # Delete an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @see https://docs.github.com/en/rest/dependabot/organization-secrets?apiVersion=2022-11-28#delete-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#103
+  def delete_org_dependabot_secret(org, name); end
+
+  # Get public key for secrets encryption
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @return [Hash] key_id and key
+  # @see https://docs.github.com/en/rest/dependabot/repository-secrets#get-a-repository-public-key
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#14
+  def get_dependabot_public_key(repo); end
+
+  # Get a secret
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at, updated_at, and visibility
+  # @see https://docs.github.com/en/rest/dependabot/repository-secrets?apiVersion=2022-11-28#get-a-repository-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#55
+  def get_dependabot_secret(repo, name); end
+
+  # Get public key for secrets encryption
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] key_id and key
+  # @see https://docs.github.com/en/rest/dependabot/organization-secrets?apiVersion=2022-11-28#get-an-organization-public-key
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#23
+  def get_org_dependabot_public_key(org); end
+
+  # Get an org secret
+  #
+  # @param org [String] A GitHub organization
+  # @param name [String] Name of secret
+  # @return [Hash] name, created_at, updated_at, and visibility
+  # @see https://docs.github.com/en/rest/dependabot/organization-secrets?apiVersion=2022-11-28#get-an-organization-secret
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#65
+  def get_org_dependabot_secret(org, name); end
+
+  # List secrets
+  #
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://docs.github.com/en/rest/dependabot/repository-secrets?apiVersion=2022-11-28#list-repository-secrets
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#32
+  def list_dependabot_secrets(repo); end
+
+  # List org secrets
+  #
+  # @param org [String] A GitHub organization
+  # @return [Hash] total_count and list of secrets (each item is hash with name, created_at and updated_at)
+  # @see https://docs.github.com/en/rest/dependabot/organization-secrets?apiVersion=2022-11-28#list-organization-secrets
+  #
+  # source://octokit//lib/octokit/client/dependabot_secrets.rb#43
+  def list_org_dependabot_secrets(org); end
 end
 
 # Methods for the Deployments API
@@ -1840,8 +2197,8 @@ module Octokit::Client::Environments
   # @option options
   # @option options
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param environment_name [String] The name of the environment
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] An environment
   # @see https://docs.github.com/en/rest/deployments/environments#create-or-update-an-environment
@@ -2358,13 +2715,13 @@ module Octokit::Client::Hooks
   #   )
   # @option options
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
-  # @param name [String] The name of the service that is being called. See
-  #   {https://api.github.com/hooks Hooks} for the possible names.
+  # @param options [Hash] a customizable set of options
   # @param config [Hash] A Hash containing key/value pairs to provide
   #   settings for this hook. These settings vary between the services and
   #   are defined in the {https://github.com/github/github-services github-services} repo.
-  # @param options [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
+  # @param name [String] The name of the service that is being called. See
+  #   {https://api.github.com/hooks Hooks} for the possible names.
   # @return [Sawyer::Resource] Hook info for the new hook
   # @see https://api.github.com/hooks
   # @see https://github.com/github/github-services
@@ -2391,9 +2748,9 @@ module Octokit::Client::Hooks
   #   )
   # @option options
   # @option options
-  # @param org [String, Integer] Organization GitHub login or id.
   # @param config [Hash] A Hash containing key/value pairs to provide
   #   settings for this hook.
+  # @param org [String, Integer] Organization GitHub login or id.
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] Hook info for the new hook
   # @see https://api.github.com/hooks
@@ -2425,10 +2782,10 @@ module Octokit::Client::Hooks
   # @option options
   # @option options
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
-  # @param id [Integer] Id of the hook being updated.
   # @param name [String] The name of the service that is being called. See
   #   {https://api.github.com/hooks Hooks} for the possible names.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
+  # @param id [Integer] Id of the hook being updated.
   # @param config [Hash] A Hash containing key/value pairs to provide
   #   settings for this hook. These settings vary between the services and
   #   are defined in the {https://github.com/github/github-services github-services} repo.
@@ -2460,11 +2817,11 @@ module Octokit::Client::Hooks
   #   )
   # @option options
   # @option options
-  # @param org [String, Integer] Organization GitHub login or id.
-  # @param id [Integer] Id of the hook to update.
+  # @param options [Hash] a customizable set of options
   # @param config [Hash] A Hash containing key/value pairs to provide
   #   settings for this hook.
-  # @param options [Hash] a customizable set of options
+  # @param org [String, Integer] Organization GitHub login or id.
+  # @param id [Integer] Id of the hook to update.
   # @return [Sawyer::Resource] Hook info for the new hook
   # @see https://api.github.com/hooks
   # @see https://developer.github.com/v3/orgs/hooks/#edit-a-hook
@@ -2637,11 +2994,11 @@ module Octokit::Client::Hooks
   #   )
   # @option options
   # @option options
-  # @param org [String, Integer] Organization GitHub login or id.
-  # @param id [Integer] Id of the hook to update.
+  # @param options [Hash] a customizable set of options
   # @param config [Hash] A Hash containing key/value pairs to provide
   #   settings for this hook.
-  # @param options [Hash] a customizable set of options
+  # @param org [String, Integer] Organization GitHub login or id.
+  # @param id [Integer] Id of the hook to update.
   # @return [Sawyer::Resource] Hook info for the new hook
   # @see https://api.github.com/hooks
   # @see https://developer.github.com/v3/orgs/hooks/#edit-a-hook
@@ -2779,11 +3136,11 @@ module Octokit::Client::Issues
 
   # List issues for the authenticated user or repository
   #
-  # @example List issues for a repository
-  #   Octokit.list_issues("sferik/rails_admin")
   # @example List issues for the authenticated user across repositories
   #   @client = Octokit::Client.new(:login => 'foo', :password => 'bar')
   #   @client.list_issues
+  # @example List issues for a repository
+  #   Octokit.list_issues("sferik/rails_admin")
   # @option options
   # @option options
   # @option options
@@ -2806,14 +3163,14 @@ module Octokit::Client::Issues
   #
   # By default, Issue Comments are ordered by ascending ID.
   #
-  # @example Get the comments for issues in the octokit repository
-  #   @client.issues_comments("octokit/octokit.rb")
   # @example Get issues comments, sort by updated descending since a time
   #   @client.issues_comments("octokit/octokit.rb", {
   #   :sort => 'desc',
   #   :direction => 'asc',
   #   :since => '2010-05-04T23:45:02Z'
   #   })
+  # @example Get the comments for issues in the octokit repository
+  #   @client.issues_comments("octokit/octokit.rb")
   # @option options
   # @option options
   # @option options
@@ -2838,11 +3195,11 @@ module Octokit::Client::Issues
 
   # List issues for the authenticated user or repository
   #
-  # @example List issues for a repository
-  #   Octokit.list_issues("sferik/rails_admin")
   # @example List issues for the authenticated user across repositories
   #   @client = Octokit::Client.new(:login => 'foo', :password => 'bar')
   #   @client.list_issues
+  # @example List issues for a repository
+  #   Octokit.list_issues("sferik/rails_admin")
   # @option options
   # @option options
   # @option options
@@ -2918,10 +3275,10 @@ module Octokit::Client::Issues
   # @example Remove assignees "pengwynn" from Issue #23 on octokit/octokit.rb
   #   Octokit.remove_assignees("octokit/octokit.rb", 23, ["pengwynn"],
   #   :accept => "application/vnd.github.v3+json")
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param number [Integer] Issue number
-  # @param assignees [Array<String>] Assignees to be removed
   # @param options [Hash] Header params for request
+  # @param assignees [Array<String>] Assignees to be removed
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Sawyer::Resource] Issue
   # @see https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
   #
@@ -2972,10 +3329,10 @@ module Octokit::Client::Issues
 
   # Update an issue
   #
-  # @example Change the title of Issue #25
-  #   Octokit.update_issue("octokit/octokit.rb", "25", "A new title", "the same body")
   # @example Change only the assignee of Issue #25
   #   Octokit.update_issue("octokit/octokit.rb", "25", :assignee => "pengwynn")
+  # @example Change the title of Issue #25
+  #   Octokit.update_issue("octokit/octokit.rb", "25", "A new title", "the same body")
   # @option options
   # @overload update_issue
   # @overload update_issue
@@ -3147,8 +3504,8 @@ module Octokit::Client::Labels
   #   Octokit.update_label("octokit/octokit.rb", "Version 1.0", {:color => "cceeaa"})
   # @option options
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param label [String] The name of the label which will be updated
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param options [Hash] A customizable set of options.
   # @return [Sawyer::Resource] The updated label
   # @see https://developer.github.com/v3/issues/labels/#update-a-label
@@ -3490,10 +3847,10 @@ module Octokit::Client::Notifications
 
   # List your notifications
   #
-  # @example Get users notifications
-  #   @client.notifications
   # @example Get all notifications since a certain time.
   #   @client.notifications({all: true, since: '2012-10-09T23:39:01Z'})
+  # @example Get users notifications
+  #   @client.notifications
   # @option options
   # @option options
   # @option options
@@ -3506,10 +3863,10 @@ module Octokit::Client::Notifications
 
   # List your notifications in a repository
   #
-  # @example Get your notifications for octokit/octokit.rb
-  #   @client.repository_notifications('octokit/octokit.rb')
   # @example Get your notifications for octokit/octokit.rb since a time.
   #   @client.repository_notifications({since: '2012-10-09T23:39:01Z'})
+  # @example Get your notifications for octokit/octokit.rb
+  #   @client.repository_notifications('octokit/octokit.rb')
   # @option options
   # @option options
   # @option options
@@ -3523,10 +3880,10 @@ module Octokit::Client::Notifications
 
   # List your notifications in a repository
   #
-  # @example Get your notifications for octokit/octokit.rb
-  #   @client.repository_notifications('octokit/octokit.rb')
   # @example Get your notifications for octokit/octokit.rb since a time.
   #   @client.repository_notifications({since: '2012-10-09T23:39:01Z'})
+  # @example Get your notifications for octokit/octokit.rb
+  #   @client.repository_notifications('octokit/octokit.rb')
   # @option options
   # @option options
   # @option options
@@ -3636,7 +3993,7 @@ module Octokit::Client::OauthApplications
   #
   # @example
   #   client = Octokit::Client.new(:client_id => 'abcdefg12345', :client_secret => 'secret')
-  #   client.delete_token('deadbeef1234567890deadbeef987654321')
+  #   client.delete_app_token('deadbeef1234567890deadbeef987654321')
   # @param access_token [String] 40 character GitHub OAuth access token
   # @return [Boolean] Result
   # @see https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
@@ -3650,7 +4007,7 @@ module Octokit::Client::OauthApplications
   #
   # @example
   #   client = Octokit::Client.new(:client_id => 'abcdefg12345', :client_secret => 'secret')
-  #   client.delete_token('deadbeef1234567890deadbeef987654321')
+  #   client.delete_app_token('deadbeef1234567890deadbeef987654321')
   # @param access_token [String] 40 character GitHub OAuth access token
   # @return [Boolean] Result
   # @see https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
@@ -3692,7 +4049,7 @@ module Octokit::Client::OauthApplications
   #
   # @example
   #   client = Octokit::Client.new(:client_id => 'abcdefg12345', :client_secret => 'secret')
-  #   client.delete_token('deadbeef1234567890deadbeef987654321')
+  #   client.delete_app_token('deadbeef1234567890deadbeef987654321')
   # @param access_token [String] 40 character GitHub OAuth access token
   # @return [Boolean] Result
   # @see https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
@@ -3762,11 +4119,11 @@ module Octokit::Client::Objects
   # @param tag [String] Tag string.
   # @param message [String] Tag message.
   # @param object_sha [String] SHA of the git object this is tagging.
-  # @param type [String] Type of the object we're tagging. Normally this is
-  #   a `commit` but it can also be a `tree` or a `blob`.
   # @param tagger_name [String] Name of the author of the tag.
   # @param tagger_email [String] Email of the author of the tag.
   # @param tagger_date [string] Timestamp of when this object was tagged.
+  # @param type [String] Type of the object we're tagging. Normally this is
+  #   a `commit` but it can also be a `tree` or a `blob`.
   # @return [Sawyer::Resource] Hash representing new tag.
   # @see https://developer.github.com/v3/git/tags/#create-a-tag-object
   #
@@ -3872,14 +4229,14 @@ module Octokit::Client::Organizations
   # organization, or a direct form of a repo owned by the organization.
   #
   # @example
-  #   @client.add_team_repository(100000, 'github/developer.github.com')
-  # @example
   #   @client.add_team_repo(100000, 'github/developer.github.com')
+  # @example
+  #   @client.add_team_repository(100000, 'github/developer.github.com')
   # @example Add a team with admin permissions
   #   @client.add_team_repository(100000, 'github/developer.github.com', permission: 'admin')
   # @option options
-  # @param team_id [Integer] Team id.
   # @param repo [String, Hash, Repository] A GitHub repository.
+  # @param team_id [Integer] Team id.
   # @param options [Hash] a customizable set of options
   # @return [Boolean] True if successful, false otherwise.
   # @see Octokit::Repository
@@ -3897,14 +4254,14 @@ module Octokit::Client::Organizations
   # organization, or a direct form of a repo owned by the organization.
   #
   # @example
-  #   @client.add_team_repository(100000, 'github/developer.github.com')
-  # @example
   #   @client.add_team_repo(100000, 'github/developer.github.com')
+  # @example
+  #   @client.add_team_repository(100000, 'github/developer.github.com')
   # @example Add a team with admin permissions
   #   @client.add_team_repository(100000, 'github/developer.github.com', permission: 'admin')
   # @option options
-  # @param team_id [Integer] Team id.
   # @param repo [String, Hash, Repository] A GitHub repository.
+  # @param team_id [Integer] Team id.
   # @param options [Hash] a customizable set of options
   # @return [Boolean] True if successful, false otherwise.
   # @see Octokit::Repository
@@ -4079,7 +4436,7 @@ module Octokit::Client::Organizations
   # Nonauthenticated calls to this method will return organizations that
   # the user is a public member.
   #
-  # Use an authenicated client to get both public and private organizations
+  # Use an authenticated client to get both public and private organizations
   # for a user.
   #
   # Calling this method on a `@client` will return that users organizations.
@@ -4111,7 +4468,7 @@ module Octokit::Client::Organizations
   # Nonauthenticated calls to this method will return organizations that
   # the user is a public member.
   #
-  # Use an authenicated client to get both public and private organizations
+  # Use an authenticated client to get both public and private organizations
   # for a user.
   #
   # Calling this method on a `@client` will return that users organizations.
@@ -4517,7 +4874,7 @@ module Octokit::Client::Organizations
   # Nonauthenticated calls to this method will return organizations that
   # the user is a public member.
   #
-  # Use an authenicated client to get both public and private organizations
+  # Use an authenticated client to get both public and private organizations
   # for a user.
   #
   # Calling this method on a `@client` will return that users organizations.
@@ -4549,7 +4906,7 @@ module Octokit::Client::Organizations
   # Nonauthenticated calls to this method will return organizations that
   # the user is a public member.
   #
-  # Use an authenicated client to get both public and private organizations
+  # Use an authenticated client to get both public and private organizations
   # for a user.
   #
   # Calling this method on a `@client` will return that users organizations.
@@ -4839,10 +5196,10 @@ module Octokit::Client::Organizations
   # @example
   #   # Get the full repository object including the permissions level and role for the team
   #   @client.team_permissions_for_repo("github", "justice-league", "octocat", "hello-world", :accept => 'application/vnd.github.v3.repository+json')
-  # @param org [String, Integer] Organization GitHub login or id.
   # @param team_slug_or_id [String, Integer] Team slug or Team ID.
-  # @param owner [String] Owner name for the repository.
   # @param repo [String] Name of the repo to check permissions against.
+  # @param owner [String] Owner name for the repository.
+  # @param org [String, Integer] Organization GitHub login or id.
   # @return [String, Sawyer::Resource] Depending on options it may be an empty string or a resource.
   # @see https://docs.github.com/en/rest/teams/teams#check-team-permissions-for-a-repository
   #
@@ -4944,6 +5301,8 @@ module Octokit::Client::Organizations
   # Requires authenticated client with proper organization permissions.
   #
   # @example
+  #   @client.update_org('github', {:company => 'Unicorns, Inc.'})
+  # @example
   #   @client.update_organization('github', {
   #   :billing_email => 'support@github.com',
   #   :company => 'GitHub',
@@ -4951,8 +5310,6 @@ module Octokit::Client::Organizations
   #   :location => 'San Francisco',
   #   :name => 'github'
   #   })
-  # @example
-  #   @client.update_org('github', {:company => 'Unicorns, Inc.'})
   # @option values
   # @option values
   # @option values
@@ -4973,8 +5330,8 @@ module Octokit::Client::Organizations
   # @option options
   # @option options
   # @option options
-  # @param org [String, Integer] Organization GitHub login or id.
   # @param options [Hash] a customizable set of options
+  # @param org [String, Integer] Organization GitHub login or id.
   # @return [Sawyer::Resource] Hash representing the updated organization membership.
   # @see https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
   # @see https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
@@ -4987,6 +5344,8 @@ module Octokit::Client::Organizations
   # Requires authenticated client with proper organization permissions.
   #
   # @example
+  #   @client.update_org('github', {:company => 'Unicorns, Inc.'})
+  # @example
   #   @client.update_organization('github', {
   #   :billing_email => 'support@github.com',
   #   :company => 'GitHub',
@@ -4994,8 +5353,6 @@ module Octokit::Client::Organizations
   #   :location => 'San Francisco',
   #   :name => 'github'
   #   })
-  # @example
-  #   @client.update_org('github', {:company => 'Unicorns, Inc.'})
   # @option values
   # @option values
   # @option values
@@ -5016,8 +5373,8 @@ module Octokit::Client::Organizations
   # @option options
   # @option options
   # @option options
-  # @param org [String, Integer] Organization GitHub login or id.
   # @param options [Hash] a customizable set of options
+  # @param org [String, Integer] Organization GitHub login or id.
   # @return [Sawyer::Resource] Hash representing the updated organization membership.
   # @see https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
   # @see https://developer.github.com/v3/orgs/members/#add-or-update-organization-membership
@@ -5143,13 +5500,13 @@ module Octokit::Client::Projects
   #
   # Requires authenticated client
   #
-  # @example Create with only a name
-  #   @client.create_org_project("octocat", "make more octocats")
   # @example Create a project with name and body
   #   @client.create_org_project("octokit", "octocan", body: 'Improve clients')
+  # @example Create with only a name
+  #   @client.create_org_project("octocat", "make more octocats")
   # @option options
-  # @param org [String] A GitHub organization
   # @param name [String] Project name
+  # @param org [String] A GitHub organization
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] Organization project
   # @see https://developer.github.com/v3/projects/#create-an-organization-project
@@ -5161,13 +5518,13 @@ module Octokit::Client::Projects
   #
   # Requires authenticated client
   #
-  # @example Create with only a name
-  #   @client.create_org_project("octocat", "make more octocats")
   # @example Create a project with name and body
   #   @client.create_org_project("octokit", "octocan", body: 'Improve clients')
+  # @example Create with only a name
+  #   @client.create_org_project("octocat", "make more octocats")
   # @option options
-  # @param org [String] A GitHub organization
   # @param name [String] Project name
+  # @param org [String] A GitHub organization
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] Organization project
   # @see https://developer.github.com/v3/projects/#create-an-organization-project
@@ -5179,13 +5536,13 @@ module Octokit::Client::Projects
   #
   # Requires authenticated client
   #
-  # @example Create project with only a name
-  #   @client.create_project('octokit/octokit.rb', 'implement new APIs')
   # @example Create project with name and body
   #   @client.create_project('octokit/octokit.rb', 'bugs be gone', body: 'Fix all the bugs @joeyw creates')
+  # @example Create project with only a name
+  #   @client.create_project('octokit/octokit.rb', 'implement new APIs')
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param name [String] Project name
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] Fresh new project
   # @see https://developer.github.com/v3/projects/#create-a-repository-project
@@ -5197,10 +5554,10 @@ module Octokit::Client::Projects
   #
   # Requires authenticated client
   #
-  # @example Create a project card with a note
-  #   @client.create_project_card(123495, note: 'New note card')
   # @example Create a project card for an repository issue
   #   @client.create_project_card(123495, content_id: 1, content_type: 'Issue')
+  # @example Create a project card with a note
+  #   @client.create_project_card(123495, note: 'New note card')
   # @note If :note is supplied, :content_id and :content_type must be
   #   excluded. Similarly, if :content_id is supplied, :content_type must
   #   be set and :note must not be included.
@@ -5272,15 +5629,15 @@ module Octokit::Client::Projects
   #
   # Requires authenticated client
   #
-  # @example Move a card to the bottom of the same column
-  #   @client.move_project_card(123495, 'bottom')
   # @example Move a card to the top of another column
   #   @client.move_project_card(123495, 'top', column_id: 59402)
+  # @example Move a card to the bottom of the same column
+  #   @client.move_project_card(123495, 'bottom')
   # @option options
-  # @param id [Integer] Project card id
   # @param position [String] Can be one of <tt>top</tt>, <tt>bottom</tt>,
   #   or <tt>after:<card-id></tt>, where <card-id> is the id value of a
   #   card in the same column, or in the new column specified by column_id.
+  # @param id [Integer] Project card id
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] Empty sawyer resource
   # @see https://developer.github.com/v3/projects/cards/#move-a-project-card
@@ -5524,20 +5881,23 @@ module Octokit::Client::PullRequests
 
   # Create a pull request comment
   #
+  # @deprecated The position will be deprecated in the next major version. Please refer to the details below.
   # @example
   #   @client.create_pull_request_comment("octokit/octokit.rb", 163, ":shipit:",
   #   "2d3201e4440903d8b04a5487842053ca4883e5f0", "lib/octokit/request.rb", 47)
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param pull_id [Integer] Pull request id
   # @param body [String] Comment content
-  # @param commit_id [String] Sha of the commit to comment on.
   # @param path [String] Relative path of the file to comment on.
-  # @param position [Integer] Line index in the diff to comment on.
+  # @param line [Integer] Line index in the diff to comment on.
+  #   For a multi-line comment, the last line of the range
+  #   and specify 'start_line' in the 'options'.
+  # @param commit_id [String] Sha of the commit to comment on.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @return [Sawyer::Resource] Hash representing the new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#206
-  def create_pull_comment(repo, pull_id, body, commit_id, path, position, options = T.unsafe(nil)); end
+  # source://octokit//lib/octokit/client/pull_requests.rb#209
+  def create_pull_comment(repo, pull_id, body, commit_id, path, line, options = T.unsafe(nil)); end
 
   # Create reply to a pull request comment
   #
@@ -5550,7 +5910,7 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#228
+  # source://octokit//lib/octokit/client/pull_requests.rb#231
   def create_pull_reply(repo, pull_id, body, comment_id, options = T.unsafe(nil)); end
 
   # Create a pull request
@@ -5564,8 +5924,8 @@ module Octokit::Client::PullRequests
   #   repository. You cannot submit a pull request to one repo that requests
   #   a merge to a base of another repo.
   # @param head [String] The branch (or git ref) where your changes are implemented.
-  # @param title [String] Title for the pull request
   # @param body [String] The body for the pull request (optional). Supports GFM.
+  # @param title [String] Title for the pull request
   # @return [Sawyer::Resource] The newly created pull request
   # @see https://developer.github.com/v3/pulls/#create-a-pull-request
   #
@@ -5574,20 +5934,23 @@ module Octokit::Client::PullRequests
 
   # Create a pull request comment
   #
+  # @deprecated The position will be deprecated in the next major version. Please refer to the details below.
   # @example
   #   @client.create_pull_request_comment("octokit/octokit.rb", 163, ":shipit:",
   #   "2d3201e4440903d8b04a5487842053ca4883e5f0", "lib/octokit/request.rb", 47)
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param pull_id [Integer] Pull request id
   # @param body [String] Comment content
-  # @param commit_id [String] Sha of the commit to comment on.
   # @param path [String] Relative path of the file to comment on.
-  # @param position [Integer] Line index in the diff to comment on.
+  # @param line [Integer] Line index in the diff to comment on.
+  #   For a multi-line comment, the last line of the range
+  #   and specify 'start_line' in the 'options'.
+  # @param commit_id [String] Sha of the commit to comment on.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @return [Sawyer::Resource] Hash representing the new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#206
-  def create_pull_request_comment(repo, pull_id, body, commit_id, path, position, options = T.unsafe(nil)); end
+  # source://octokit//lib/octokit/client/pull_requests.rb#209
+  def create_pull_request_comment(repo, pull_id, body, commit_id, path, line, options = T.unsafe(nil)); end
 
   # Create reply to a pull request comment
   #
@@ -5600,7 +5963,7 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#228
+  # source://octokit//lib/octokit/client/pull_requests.rb#231
   def create_pull_request_comment_reply(repo, pull_id, body, comment_id, options = T.unsafe(nil)); end
 
   # Create a pull request from existing issue
@@ -5629,25 +5992,28 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#228
+  # source://octokit//lib/octokit/client/pull_requests.rb#231
   def create_review_reply(repo, pull_id, body, comment_id, options = T.unsafe(nil)); end
 
   # Create a pull request comment
   #
+  # @deprecated The position will be deprecated in the next major version. Please refer to the details below.
   # @example
   #   @client.create_pull_request_comment("octokit/octokit.rb", 163, ":shipit:",
   #   "2d3201e4440903d8b04a5487842053ca4883e5f0", "lib/octokit/request.rb", 47)
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param pull_id [Integer] Pull request id
   # @param body [String] Comment content
-  # @param commit_id [String] Sha of the commit to comment on.
   # @param path [String] Relative path of the file to comment on.
-  # @param position [Integer] Line index in the diff to comment on.
+  # @param line [Integer] Line index in the diff to comment on.
+  #   For a multi-line comment, the last line of the range
+  #   and specify 'start_line' in the 'options'.
+  # @param commit_id [String] Sha of the commit to comment on.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @return [Sawyer::Resource] Hash representing the new comment
   # @see https://developer.github.com/v3/pulls/comments/#create-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#206
-  def create_view_comment(repo, pull_id, body, commit_id, path, position, options = T.unsafe(nil)); end
+  # source://octokit//lib/octokit/client/pull_requests.rb#209
+  def create_view_comment(repo, pull_id, body, commit_id, path, line, options = T.unsafe(nil)); end
 
   # Delete pull request comment
   #
@@ -5658,7 +6024,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if deleted, false otherwise
   # @see https://developer.github.com/v3/pulls/comments/#delete-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#262
+  # source://octokit//lib/octokit/client/pull_requests.rb#265
   def delete_pull_comment(repo, comment_id, options = T.unsafe(nil)); end
 
   # Delete pull request comment
@@ -5670,7 +6036,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if deleted, false otherwise
   # @see https://developer.github.com/v3/pulls/comments/#delete-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#262
+  # source://octokit//lib/octokit/client/pull_requests.rb#265
   def delete_pull_request_comment(repo, comment_id, options = T.unsafe(nil)); end
 
   # Delete pull request comment
@@ -5682,7 +6048,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if deleted, false otherwise
   # @see https://developer.github.com/v3/pulls/comments/#delete-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#262
+  # source://octokit//lib/octokit/client/pull_requests.rb#265
   def delete_review_comment(repo, comment_id, options = T.unsafe(nil)); end
 
   # Merge a pull request
@@ -5693,7 +6059,7 @@ module Octokit::Client::PullRequests
   # @return [Array<Sawyer::Resource>] Merge commit info if successful
   # @see https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#297
+  # source://octokit//lib/octokit/client/pull_requests.rb#300
   def merge_pull_request(repo, number, commit_message = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Get a pull request
@@ -5747,7 +6113,7 @@ module Octokit::Client::PullRequests
   # @return [Array<Sawyer::Resource>] List of files
   # @see https://developer.github.com/v3/pulls/#list-pull-requests-files
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#274
+  # source://octokit//lib/octokit/client/pull_requests.rb#277
   def pull_files(repo, number, options = T.unsafe(nil)); end
 
   # Check pull request merge status
@@ -5757,7 +6123,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if the pull request has been merged
   # @see https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#307
+  # source://octokit//lib/octokit/client/pull_requests.rb#310
   def pull_merged?(repo, number, options = T.unsafe(nil)); end
 
   # Get a pull request
@@ -5811,7 +6177,7 @@ module Octokit::Client::PullRequests
   # @return [Array<Sawyer::Resource>] List of files
   # @see https://developer.github.com/v3/pulls/#list-pull-requests-files
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#274
+  # source://octokit//lib/octokit/client/pull_requests.rb#277
   def pull_request_files(repo, number, options = T.unsafe(nil)); end
 
   # Check pull request merge status
@@ -5821,7 +6187,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if the pull request has been merged
   # @see https://developer.github.com/v3/pulls/#get-if-a-pull-request-has-been-merged
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#307
+  # source://octokit//lib/octokit/client/pull_requests.rb#310
   def pull_request_merged?(repo, number, options = T.unsafe(nil)); end
 
   # List pull requests for a repository
@@ -5839,14 +6205,14 @@ module Octokit::Client::PullRequests
   #
   # By default, Review Comments are ordered by ascending ID.
   #
-  # @example Get the pull request review comments in the octokit repository
-  #   @client.issues_comments("octokit/octokit.rb")
   # @example Get review comments, sort by updated asc since a time
   #   @client.pull_requests_comments("octokit/octokit.rb", {
   #   :sort => 'updated',
   #   :direction => 'asc',
   #   :since => '2010-05-04T23:45:02Z'
   #   })
+  # @example Get the pull request review comments in the octokit repository
+  #   @client.issues_comments("octokit/octokit.rb")
   # @option options
   # @option options
   # @option options
@@ -5873,14 +6239,14 @@ module Octokit::Client::PullRequests
   #
   # By default, Review Comments are ordered by ascending ID.
   #
-  # @example Get the pull request review comments in the octokit repository
-  #   @client.issues_comments("octokit/octokit.rb")
   # @example Get review comments, sort by updated asc since a time
   #   @client.pull_requests_comments("octokit/octokit.rb", {
   #   :sort => 'updated',
   #   :direction => 'asc',
   #   :since => '2010-05-04T23:45:02Z'
   #   })
+  # @example Get the pull request review comments in the octokit repository
+  #   @client.issues_comments("octokit/octokit.rb")
   # @option options
   # @option options
   # @option options
@@ -5918,14 +6284,14 @@ module Octokit::Client::PullRequests
   #
   # By default, Review Comments are ordered by ascending ID.
   #
-  # @example Get the pull request review comments in the octokit repository
-  #   @client.issues_comments("octokit/octokit.rb")
   # @example Get review comments, sort by updated asc since a time
   #   @client.pull_requests_comments("octokit/octokit.rb", {
   #   :sort => 'updated',
   #   :direction => 'asc',
   #   :since => '2010-05-04T23:45:02Z'
   #   })
+  # @example Get the pull request review comments in the octokit repository
+  #   @client.issues_comments("octokit/octokit.rb")
   # @option options
   # @option options
   # @option options
@@ -5947,7 +6313,7 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing the updated comment
   # @see https://developer.github.com/v3/pulls/comments/#edit-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#247
+  # source://octokit//lib/octokit/client/pull_requests.rb#250
   def update_pull_comment(repo, comment_id, body, options = T.unsafe(nil)); end
 
   # Update a pull request
@@ -5974,7 +6340,7 @@ module Octokit::Client::PullRequests
   # @return [Boolean] True if the pull request branch has been updated
   # @see https://developer.github.com/v3/pulls/#update-a-pull-request-branch
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#286
+  # source://octokit//lib/octokit/client/pull_requests.rb#289
   def update_pull_request_branch(repo, number, options = T.unsafe(nil)); end
 
   # Update pull request comment
@@ -5987,7 +6353,7 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing the updated comment
   # @see https://developer.github.com/v3/pulls/comments/#edit-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#247
+  # source://octokit//lib/octokit/client/pull_requests.rb#250
   def update_pull_request_comment(repo, comment_id, body, options = T.unsafe(nil)); end
 
   # Update pull request comment
@@ -6000,7 +6366,7 @@ module Octokit::Client::PullRequests
   # @return [Sawyer::Resource] Hash representing the updated comment
   # @see https://developer.github.com/v3/pulls/comments/#edit-a-comment
   #
-  # source://octokit//lib/octokit/client/pull_requests.rb#247
+  # source://octokit//lib/octokit/client/pull_requests.rb#250
   def update_review_comment(repo, comment_id, body, options = T.unsafe(nil)); end
 end
 
@@ -6151,16 +6517,45 @@ module Octokit::Client::Reactions
   # source://octokit//lib/octokit/client/reactions.rb#133
   def create_pull_request_review_comment_reaction(repo, id, reaction, options = T.unsafe(nil)); end
 
+  # Create reaction for a release
+  #
+  # @example
+  #   @client.create_release_reaction("octokit/octokit.rb", 1)
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param id [Integer] The Release id
+  # @param reaction [String] The Reaction
+  # @return [<Sawyer::Resource>] Hash representing the reaction.
+  # @see https://docs.github.com/en/free-pro-team@latest/rest/reactions/reactions?apiVersion=2022-11-28#create-reaction-for-a-release
+  # @see https://developer.github.com/v3/reactions/#reaction-types
+  #
+  # source://octokit//lib/octokit/client/reactions.rb#182
+  def create_release_reaction(repo, release_id, reaction, options = T.unsafe(nil)); end
+
   # Delete a reaction
   #
   # @example
-  #   @client.delete_reaction(1)
-  # @param id [Integer] Reaction id
+  #   @client.delete_issue_reaction("octokit/octokit.rb", 1, 2)
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param issue_id [Integer] The Issue comment id
+  # @param reaction_id [Integer] The Reaction id
   # @return [Boolean] Return true if reaction was deleted, false otherwise.
-  # @see https://developer.github.com/v3/reactions/#delete-a-reaction
+  # @see https://docs.github.com/en/rest/reactions/reactions#delete-an-issue-reaction
   #
-  # source://octokit//lib/octokit/client/reactions.rb#148
-  def delete_reaction(id, options = T.unsafe(nil)); end
+  # source://octokit//lib/octokit/client/reactions.rb#150
+  def delete_issue_reaction(repo, issue_id, reaction_id, options = T.unsafe(nil)); end
+
+  # Delete a reaction for a release
+  #
+  # @example
+  #   @client.delete_release_reaction("octokit/octokit.rb", 1, 2)
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param issue_id [Integer] The Release id
+  # @param reaction_id [Integer] The Reaction id
+  # @return [Boolean] Return true if reaction was deleted, false otherwise.
+  # @see https://docs.github.com/en/free-pro-team@latest/rest/reactions/reactions?apiVersion=2022-11-28#delete-a-release-reaction
+  #
+  # source://octokit//lib/octokit/client/reactions.rb#199
+  def delete_release_reaction(repo, release_id, reaction_id, options = T.unsafe(nil)); end
 
   # List reactions for an issue comment
   #
@@ -6197,6 +6592,18 @@ module Octokit::Client::Reactions
   #
   # source://octokit//lib/octokit/client/reactions.rb#116
   def pull_request_review_comment_reactions(repo, id, options = T.unsafe(nil)); end
+
+  # List reactions for a release
+  #
+  # @example
+  #   @client.release_reactions("octokit/octokit.rb", 1)
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
+  # @param id [Integer] The Release id
+  # @return [Array<Sawyer::Resource>] Array of Hashes representing the reactions.
+  # @see https://docs.github.com/en/free-pro-team@latest/rest/reactions/reactions?apiVersion=2022-11-28#list-reactions-for-a-release
+  #
+  # source://octokit//lib/octokit/client/reactions.rb#165
+  def release_reactions(repo, release_id, options = T.unsafe(nil)); end
 end
 
 # Methods for References for Git Data API
@@ -6357,10 +6764,10 @@ module Octokit::Client::Refs
   #   Octokit.update_branch("octocat/Hello-World", "sc/featureA", "aa218f56b14c9653891f9e74264a383fa43fefbd")
   # @example Fast-forward update heads/sc/featureA for octocat/Hello-World with sha aa218f56b14c9653891f9e74264a383fa43fefbd
   #   Octokit.update_branch("octocat/Hello-World", "sc/featureA", "aa218f56b14c9653891f9e74264a383fa43fefbd", false)
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @param branch [String] The ref, e.g. <tt>feature/new-shiny</tt>
-  # @param sha [String] A SHA, e.g. <tt>827efc6d56897b048c772eb4087f854f46256132</tt>
   # @param force [Boolean] A flag indicating whether to force the update or to make sure the update is a fast-forward update.
+  # @param sha [String] A SHA, e.g. <tt>827efc6d56897b048c772eb4087f854f46256132</tt>
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
   # @return [Array<Sawyer::Resource>] The list of references updated
   # @see https://developer.github.com/v3/git/refs/#update-a-reference
   #
@@ -6996,8 +7403,8 @@ module Octokit::Client::Repositories
   #   @client.update_deploy_key('octokit/octokit.rb', 8675309, :title => 'Uber', :key => 'ssh-rsa BBB...'))
   # @option title
   # @option key
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param id [Integer] Deploy key ID.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param options [Hash] Attributes to edit.
   # @param title [Hash] a customizable set of options
   # @param key [Hash] a customizable set of options
@@ -7180,8 +7587,8 @@ module Octokit::Client::Repositories
   #   @client.protect_branch('octokit/octokit.rb', 'master', foo)
   # @option options
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param branch [String] Branch name
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param options [Hash] a customizable set of options
   # @return [Sawyer::Resource] The protected branch
   # @see https://developer.github.com/v3/repos/#enabling-and-disabling-branch-protection
@@ -7595,8 +8002,8 @@ module Octokit::Client::Repositories
   #   @client.update_deploy_key('octokit/octokit.rb', 8675309, :title => 'Uber', :key => 'ssh-rsa BBB...'))
   # @option title
   # @option key
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param id [Integer] Deploy key ID.
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository.
   # @param options [Hash] Attributes to edit.
   # @param title [Hash] a customizable set of options
   # @param key [Hash] a customizable set of options
@@ -7980,7 +8387,7 @@ module Octokit::Client::Reviews
   # @param reviewers [Hash] :reviewers [Array<String>] An array of user logins
   # @param options [Hash] :team_reviewers [Array<String>] An array of team slugs
   # @return [Sawyer::Resource] ] Hash respresenting the pull request
-  # @see https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
+  # @see https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
   #
   # source://octokit//lib/octokit/client/reviews.rb#160
   def request_pull_request_review(repo, number, reviewers = T.unsafe(nil), options = T.unsafe(nil)); end
@@ -7991,12 +8398,12 @@ module Octokit::Client::Reviews
   #   @client.submit_pull_request_review('octokit/octokit.rb', 825, 6505518,
   #   'APPROVE', body: 'LGTM!')
   # @option options
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param number [Integer] Number ID of the pull request
-  # @param review [Integer] The id of the review
   # @param event [String] The review action (event) to perform; can be one of
   #   APPROVE, REQUEST_CHANGES, or COMMENT.
   # @param options [Hash] Method options
+  # @param review [Integer] The id of the review
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @return [Sawyer::Resource] Hash respresenting the review
   # @see https://developer.github.com/v3/pulls/reviews/#submit-a-pull-request-review
   #
@@ -8010,8 +8417,8 @@ module Octokit::Client::Reviews
   # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param number [Integer] Number ID of the pull request
   # @param review [Integer] The id of the review
-  # @param body [String] body text of the pull request review.
   # @param options [Hash] Method options
+  # @param body [String] body text of the pull request review.
   # @return [Sawyer::Resource] Hash representing the review comment
   # @see https://developer.github.com/v3/pulls/reviews/#update-a-pull-request-review
   #
@@ -8337,8 +8744,8 @@ module Octokit::Client::Stats
   #   @client.code_frequency_stats('octokit/octokit.rb')
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Sawyer::Resource>] Weekly aggregate of the number of additions
   #   and deletions pushed to a repository.
@@ -8353,8 +8760,8 @@ module Octokit::Client::Stats
   #   @client.commit_activity_stats('octokit/octokit.rb')
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Sawyer::Resource>] The last year of commit activity grouped by
   #   week. The days array is a group of commits per day, starting on Sunday.
@@ -8369,8 +8776,8 @@ module Octokit::Client::Stats
   #   @client.contributors_stats('octokit/octokit.rb')
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Sawyer::Resource>] Array of contributor stats
   # @see https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
@@ -8384,8 +8791,8 @@ module Octokit::Client::Stats
   #   @client.contributors_stats('octokit/octokit.rb')
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Sawyer::Resource>] Array of contributor stats
   # @see https://developer.github.com/v3/repos/statistics/#get-contributors-list-with-additions-deletions-and-commit-counts
@@ -8399,8 +8806,8 @@ module Octokit::Client::Stats
   #   @client.participation_stats("octokit/octokit.rb")
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Sawyer::Resource] Total commit counts for the owner and total commit
   #   counts in all. all is everyone combined, including the owner in the last
@@ -8417,8 +8824,8 @@ module Octokit::Client::Stats
   #   @octokit.punch_card_stats
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Array>] Arrays containing the day number, hour number, and
   #   number of commits
@@ -8433,8 +8840,8 @@ module Octokit::Client::Stats
   #   @octokit.punch_card_stats
   # @option retry_timeout
   # @option retry_wait
-  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_timeout [Hash] a customizable set of options
+  # @param repo [Integer, String, Hash, Repository] A GitHub repository
   # @param retry_wait [Hash] a customizable set of options
   # @return [Array<Array>] Arrays containing the day number, hour number, and
   #   number of commits
@@ -8476,10 +8883,10 @@ module Octokit::Client::Statuses
   # @option options
   # @option options
   # @option options
-  # @param repo [Integer, String, Repository, Hash] A GitHub repository
-  # @param sha [String] The SHA1 for the commit
-  # @param state [String] The state: pending, success, failure, error
   # @param options [Hash] a customizable set of options
+  # @param sha [String] The SHA1 for the commit
+  # @param repo [Integer, String, Repository, Hash] A GitHub repository
+  # @param state [String] The state: pending, success, failure, error
   # @return [Sawyer::Resource] A status
   # @see https://developer.github.com/v3/repos/statuses/#create-a-status
   #
@@ -8612,7 +9019,7 @@ module Octokit::Client::Users
   # @return [Array<String>] Array of all email addresses of the user.
   # @see https://developer.github.com/v3/users/emails/#add-email-addresses
   #
-  # source://octokit//lib/octokit/client/users.rb#312
+  # source://octokit//lib/octokit/client/users.rb#339
   def add_email(email, _options = T.unsafe(nil)); end
 
   # Add public key to user account.
@@ -8626,7 +9033,7 @@ module Octokit::Client::Users
   # @return [Sawyer::Resource] Hash representing the newly added public key.
   # @see https://developer.github.com/v3/users/keys/#create-a-public-key
   #
-  # source://octokit//lib/octokit/client/users.rb#255
+  # source://octokit//lib/octokit/client/users.rb#282
   def add_key(title, key, options = T.unsafe(nil)); end
 
   # List all GitHub users
@@ -8649,7 +9056,7 @@ module Octokit::Client::Users
   # @param id [Integer] ID number of the migration.
   # @see https://docs.github.com/en/rest/reference/migrations#delete-a-user-migration-archive
   #
-  # source://octokit//lib/octokit/client/users.rb#398
+  # source://octokit//lib/octokit/client/users.rb#425
   def delete_user_migration_archive(id, options = T.unsafe(nil)); end
 
   # List email addresses for a user.
@@ -8661,7 +9068,7 @@ module Octokit::Client::Users
   # @return [Array<String>] Array of email addresses.
   # @see https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
   #
-  # source://octokit//lib/octokit/client/users.rb#299
+  # source://octokit//lib/octokit/client/users.rb#326
   def emails(options = T.unsafe(nil)); end
 
   # Retrieve the access_token.
@@ -8687,7 +9094,7 @@ module Octokit::Client::Users
   # @return [Boolean] True if follow was successful, false otherwise.
   # @see https://developer.github.com/v3/users/followers/#follow-a-user
   #
-  # source://octokit//lib/octokit/client/users.rb#149
+  # source://octokit//lib/octokit/client/users.rb#176
   def follow(user, options = T.unsafe(nil)); end
 
   # Get a user's followers.
@@ -8700,7 +9107,7 @@ module Octokit::Client::Users
   #   followers.
   # @see https://developer.github.com/v3/users/followers/#list-followers-of-a-user
   #
-  # source://octokit//lib/octokit/client/users.rb#99
+  # source://octokit//lib/octokit/client/users.rb#126
   def followers(user = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Get list of users a user is following.
@@ -8713,7 +9120,7 @@ module Octokit::Client::Users
   #   user is following.
   # @see https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
   #
-  # source://octokit//lib/octokit/client/users.rb#112
+  # source://octokit//lib/octokit/client/users.rb#139
   def following(user = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Check if you are following a user. Alternatively, check if a given user
@@ -8731,7 +9138,7 @@ module Octokit::Client::Users
   # @see https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
   # @see https://developer.github.com/v3/users/followers/#check-if-one-user-follows-another
   #
-  # source://octokit//lib/octokit/client/users.rb#134
+  # source://octokit//lib/octokit/client/users.rb#161
   def follows?(*args); end
 
   # Get a public key.
@@ -8758,7 +9165,7 @@ module Octokit::Client::Users
   # @return [Sawyer::Resource] Hash representing the key.
   # @see https://developer.github.com/v3/users/keys/#get-a-single-public-key
   #
-  # source://octokit//lib/octokit/client/users.rb#217
+  # source://octokit//lib/octokit/client/users.rb#244
   def key(key_id, options = T.unsafe(nil)); end
 
   # Get list of public keys for user.
@@ -8770,8 +9177,22 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of hashes representing public keys.
   # @see https://developer.github.com/v3/users/keys/#list-your-public-keys
   #
-  # source://octokit//lib/octokit/client/users.rb#229
+  # source://octokit//lib/octokit/client/users.rb#256
   def keys(options = T.unsafe(nil)); end
+
+  # Refresh a user's access token with a refresh token.
+  #
+  # Applications can refresh an access token without requiring a user to re-authorize using refresh access token.
+  #
+  # @example
+  #   client = Octokit::Client.new(:client_id => 'abcdefg12345', :client_secret => 'secret')
+  #   client.refresh_access_token('40-character-refresh-token')
+  # @param code [String] 40 character GitHub OAuth refresh access token
+  # @return [Sawyer::Resource]
+  # @see https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/refreshing-user-access-tokens#refreshing-a-user-access-token-with-a-refresh-token
+  #
+  # source://octokit//lib/octokit/client/users.rb#72
+  def refresh_access_token(code, app_id = T.unsafe(nil), app_secret = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Remove email from user.
   #
@@ -8783,7 +9204,7 @@ module Octokit::Client::Users
   # @return [Array<String>] Array of all email addresses of the user.
   # @see https://developer.github.com/v3/users/emails/#delete-email-addresses
   #
-  # source://octokit//lib/octokit/client/users.rb#326
+  # source://octokit//lib/octokit/client/users.rb#353
   def remove_email(email); end
 
   # Remove a public key from user account.
@@ -8796,7 +9217,7 @@ module Octokit::Client::Users
   # @return [Boolean] True if removal was successful, false otherwise.
   # @see https://developer.github.com/v3/users/keys/#delete-a-public-key
   #
-  # source://octokit//lib/octokit/client/users.rb#287
+  # source://octokit//lib/octokit/client/users.rb#314
   def remove_key(id, options = T.unsafe(nil)); end
 
   # Get list of repos starred by a user.
@@ -8811,7 +9232,7 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of hashes representing repositories starred by user.
   # @see https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
   #
-  # source://octokit//lib/octokit/client/users.rb#177
+  # source://octokit//lib/octokit/client/users.rb#204
   def starred(user = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Check if you are starring a repo.
@@ -8824,7 +9245,7 @@ module Octokit::Client::Users
   # @return [Boolean] True if you are following the repo, false otherwise.
   # @see https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
   #
-  # source://octokit//lib/octokit/client/users.rb#190
+  # source://octokit//lib/octokit/client/users.rb#217
   def starred?(repo, options = T.unsafe(nil)); end
 
   # Initiates the generation of a migration archive.
@@ -8840,7 +9261,7 @@ module Octokit::Client::Users
   # @return [Sawyer::Resource] Hash representing the new migration.
   # @see https://docs.github.com/en/rest/reference/migrations#start-a-user-migration
   #
-  # source://octokit//lib/octokit/client/users.rb#354
+  # source://octokit//lib/octokit/client/users.rb#381
   def start_user_migration(repositories, options = T.unsafe(nil)); end
 
   # List repositories being watched by a user.
@@ -8851,7 +9272,7 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of repositories.
   # @see https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
   #
-  # source://octokit//lib/octokit/client/users.rb#338
+  # source://octokit//lib/octokit/client/users.rb#365
   def subscriptions(user = T.unsafe(nil), options = T.unsafe(nil)); end
 
   # Unfollow a user.
@@ -8864,7 +9285,7 @@ module Octokit::Client::Users
   # @return [Boolean] True if unfollow was successful, false otherwise.
   # @see https://developer.github.com/v3/users/followers/#unfollow-a-user
   #
-  # source://octokit//lib/octokit/client/users.rb#162
+  # source://octokit//lib/octokit/client/users.rb#189
   def unfollow(user, options = T.unsafe(nil)); end
 
   # Unlock a user repository which has been locked by a migration.
@@ -8875,7 +9296,7 @@ module Octokit::Client::Users
   # @param repo [String] Name of the repository.
   # @see https://docs.github.com/en/rest/reference/migrations#unlock-a-user-repository
   #
-  # source://octokit//lib/octokit/client/users.rb#419
+  # source://octokit//lib/octokit/client/users.rb#446
   def unlock_user_repository(id, repo, options = T.unsafe(nil)); end
 
   # Update a public key
@@ -8893,7 +9314,7 @@ module Octokit::Client::Users
   # @see https://developer.github.com/v3/users/keys/#update-a-public-key
   # @see https://developer.github.com/changes/2014-02-24-finer-grained-scopes-for-ssh-keys/
   #
-  # source://octokit//lib/octokit/client/users.rb#274
+  # source://octokit//lib/octokit/client/users.rb#301
   def update_key(key_id, options = T.unsafe(nil)); end
 
   # Update the authenticated user
@@ -8911,7 +9332,7 @@ module Octokit::Client::Users
   # @return [Sawyer::Resource]
   # @see https://developer.github.com/v3/users/#update-the-authenticated-user
   #
-  # source://octokit//lib/octokit/client/users.rb#86
+  # source://octokit//lib/octokit/client/users.rb#113
   def update_user(options); end
 
   # Get a single user
@@ -8934,7 +9355,7 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of hashes representing public keys.
   # @see https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
   #
-  # source://octokit//lib/octokit/client/users.rb#240
+  # source://octokit//lib/octokit/client/users.rb#267
   def user_keys(user, options = T.unsafe(nil)); end
 
   # Fetches the URL to a migration archive.
@@ -8944,7 +9365,7 @@ module Octokit::Client::Users
   # @param id [Integer] ID number of the migration.
   # @see https://docs.github.com/en/rest/reference/migrations#download-a-user-migration-archive
   #
-  # source://octokit//lib/octokit/client/users.rb#385
+  # source://octokit//lib/octokit/client/users.rb#412
   def user_migration_archive_url(id, options = T.unsafe(nil)); end
 
   # List repositories for a user migration.
@@ -8954,7 +9375,7 @@ module Octokit::Client::Users
   # @param id [Integer] ID number of the migration.
   # @see https://docs.github.com/en/rest/reference/migrations#list-repositories-for-a-user-migration
   #
-  # source://octokit//lib/octokit/client/users.rb#408
+  # source://octokit//lib/octokit/client/users.rb#435
   def user_migration_repositories(id, options = T.unsafe(nil)); end
 
   # Fetches the status of a migration.
@@ -8964,7 +9385,7 @@ module Octokit::Client::Users
   # @param id [Integer] ID number of the migration.
   # @see https://docs.github.com/en/rest/reference/migrations#get-a-user-migration-status
   #
-  # source://octokit//lib/octokit/client/users.rb#375
+  # source://octokit//lib/octokit/client/users.rb#402
   def user_migration_status(id, options = T.unsafe(nil)); end
 
   # Lists the most recent migrations.
@@ -8974,7 +9395,7 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of migration resources.
   # @see https://docs.github.com/en/rest/reference/migrations#list-user-migrations
   #
-  # source://octokit//lib/octokit/client/users.rb#365
+  # source://octokit//lib/octokit/client/users.rb#392
   def user_migrations(options = T.unsafe(nil)); end
 
   # Validate user username and password
@@ -8984,7 +9405,7 @@ module Octokit::Client::Users
   # @param options [Hash] User credentials
   # @return [Boolean] True if credentials are valid
   #
-  # source://octokit//lib/octokit/client/users.rb#66
+  # source://octokit//lib/octokit/client/users.rb#93
   def validate_credentials(options = T.unsafe(nil)); end
 
   # List repositories being watched by a user.
@@ -8995,7 +9416,7 @@ module Octokit::Client::Users
   # @return [Array<Sawyer::Resource>] Array of repositories.
   # @see https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
   #
-  # source://octokit//lib/octokit/client/users.rb#338
+  # source://octokit//lib/octokit/client/users.rb#365
   def watched(user = T.unsafe(nil), options = T.unsafe(nil)); end
 end
 
@@ -10606,7 +11027,7 @@ class Octokit::Repository
 
   # @return [String] Api path for id identified repos
   #
-  # source://octokit//lib/octokit/repository.rb#67
+  # source://octokit//lib/octokit/repository.rb#68
   def id_api_path; end
 
   # Returns the value of attribute name.
@@ -10623,7 +11044,7 @@ class Octokit::Repository
 
   # @return [String] Api path for owner/name identified repos
   #
-  # source://octokit//lib/octokit/repository.rb#62
+  # source://octokit//lib/octokit/repository.rb#63
   def named_api_path; end
 
   # Returns the value of attribute owner.
@@ -10666,7 +11087,7 @@ class Octokit::Repository
   #
   # @return [String]
   #
-  # source://octokit//lib/octokit/repository.rb#73
+  # source://octokit//lib/octokit/repository.rb#74
   def url; end
 
   # Returns the value of attribute owner.
@@ -10683,10 +11104,10 @@ class Octokit::Repository
 
   # @raise [Octokit::InvalidRepository]
   #
-  # source://octokit//lib/octokit/repository.rb#89
+  # source://octokit//lib/octokit/repository.rb#90
   def raise_invalid_repository!(repo); end
 
-  # source://octokit//lib/octokit/repository.rb#83
+  # source://octokit//lib/octokit/repository.rb#84
   def validate_owner_and_name!(repo); end
 
   class << self
@@ -10702,7 +11123,7 @@ class Octokit::Repository
     # @param repo [Integer, String, Hash, Repository] A GitHub repository.
     # @return [String] Api path.
     #
-    # source://octokit//lib/octokit/repository.rb#57
+    # source://octokit//lib/octokit/repository.rb#58
     def path(repo); end
   end
 end
