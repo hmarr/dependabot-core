@@ -9,6 +9,7 @@ module Dependabot
     class LanguageVersionManager
       # This list must match the versions specified at the top of `python/Dockerfile`
       PRE_INSTALLED_PYTHON_VERSIONS = %w(
+        3.13.1
         3.12.7
         3.11.9
         3.10.15
@@ -27,6 +28,14 @@ module Dependabot
         SharedHelpers.run_shell_command(
           "tar -axf /usr/local/.pyenv/versions/#{python_version}.tar.zst -C /usr/local/.pyenv/versions"
         )
+      end
+
+      def installed_version
+        # Use `pyenv exec` to query the active Python version
+        output, _status = SharedHelpers.run_shell_command("pyenv exec python --version")
+        version = output.strip.split.last # Extract the version number (e.g., "3.13.1")
+
+        version
       end
 
       def python_major_minor
