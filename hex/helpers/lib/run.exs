@@ -1,6 +1,6 @@
 defmodule DependencyHelper do
   def main() do
-    IO.read(:stdio, :all)
+    IO.read(:stdio, :eof)
     |> JSON.decode!()
     |> run()
     |> case do

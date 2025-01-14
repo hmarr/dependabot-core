@@ -47,22 +47,18 @@ end
 
 case UpdateChecker.run(dependency_name) do
   {:ok, version} ->
-    version = :erlang.term_to_binary({:ok, version})
-    IO.write(:stdio, version)
+    IO.inspect({:ok, version})
 
   {:error, %Version.InvalidRequirementError{} = error} ->
-    result = :erlang.term_to_binary({:error, "Invalid requirement: #{error.requirement}"})
-    IO.write(:stdio, result)
+    IO.inspect({:error, "Invalid requirement: #{error.requirement}"})
 
   {:error, %Mix.Error{} = error} ->
-    result = :erlang.term_to_binary({:error, "Dependency resolution failed: #{error.message}"})
-    IO.write(:stdio, result)
+    IO.inspect({:error, "Dependency resolution failed: #{error.message}"})
 
   {:error, :dependency_resolution_timed_out} ->
     # We do nothing here because Hex is already printing out a message in stdout
     nil
 
   {:error, error} ->
-    result = :erlang.term_to_binary({:error, "Unknown error in check_update: #{inspect(error)}"})
-    IO.write(:stdio, result)
+    IO.inspect({:error, "Unknown error in check_update: #{inspect(error)}"})
 end
