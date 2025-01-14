@@ -11,8 +11,9 @@ RUN apt-get update \
 #  * https://github.com/dependabot/dependabot-core/pull/7865
 #  * https://erlangforums.com/t/erlang-solutions-apt-package-for-otp-25/1552/1
 #  * https://erlangforums.com/t/the-eef-is-looking-for-volunteers-to-take-over-esls-build-packages/2238/1
-ARG ERLANG_MAJOR_VERSION=27
-ARG ERLANG_VERSION=1:${ERLANG_MAJOR_VERSION}.2.1+dfsg-1ubuntu0.1
+ARG ERLANG_MAJOR_VERSION=25
+ARG ERLANG_SECONDARY_VERSION=3.2.12
+ARG ERLANG_VERSION=1:${ERLANG_MAJOR_VERSION}.${ERLANG_SECONDARY_VERSION}+dfsg-1ubuntu2
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     erlang=${ERLANG_VERSION}
