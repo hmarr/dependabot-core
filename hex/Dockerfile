@@ -4,13 +4,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     gnupg2 sudo wget
 
-# Install Erlang
-# Note: Currently we install from Ubuntu PPA to unblock upgrading to Ubuntu 22.04, but we'd be happy to accept a PR
-# switching to a more up to date PPA. See also:
-#  * https://github.com/esl/packages/issues/15
-#  * https://github.com/dependabot/dependabot-core/pull/7865
-#  * https://erlangforums.com/t/erlang-solutions-apt-package-for-otp-25/1552/1
-#  * https://erlangforums.com/t/the-eef-is-looking-for-volunteers-to-take-over-esls-build-packages/2238/1
 ARG ERLANG_MAJOR_VERSION=26
 
 RUN echo "deb http://binaries2.erlang-solutions.com/ubuntu/ jammy-esl-erlang-26 contrib" >> /etc/apt/sources.list
@@ -31,6 +24,8 @@ RUN curl -sSLfO https://github.com/elixir-lang/elixir/releases/download/${ELIXIR
 ENV PATH="$PATH:/usr/local/elixir/bin"
 
 USER dependabot
+
+RUN elixir --version
 
 COPY --chown=dependabot:dependabot hex/helpers /opt/hex/helpers
 ENV MIX_HOME="/opt/hex/mix"
