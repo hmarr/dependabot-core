@@ -12,11 +12,13 @@ RUN apt-get update \
 #  * https://erlangforums.com/t/erlang-solutions-apt-package-for-otp-25/1552/1
 #  * https://erlangforums.com/t/the-eef-is-looking-for-volunteers-to-take-over-esls-build-packages/2238/1
 ARG ERLANG_MAJOR_VERSION=25
-ARG ERLANG_SECONDARY_VERSION=3.2.12
-ARG ERLANG_VERSION=1:${ERLANG_MAJOR_VERSION}.${ERLANG_SECONDARY_VERSION}+dfsg-1ubuntu2
+
+RUN echo "deb http://binaries2.erlang-solutions.com/ubuntu/ jammy-esl-erlang-25 contrib" >> /etc/apt/sources.list
+RUN wget https://binaries2.erlang-solutions.com/GPG-KEY-pmanager.asc \
+  && sudo apt-key add GPG-KEY-pmanager.asc
+
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-    erlang=${ERLANG_VERSION}
+  && apt-get install -y --no-install-recommends erlang
 
 # Install Elixir
 # https://github.com/elixir-lang/elixir/releases
