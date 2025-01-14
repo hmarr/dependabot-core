@@ -25,6 +25,7 @@ ENV PATH="$PATH:/usr/local/elixir/bin"
 
 USER dependabot
 
+RUN erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().'  -noshell
 RUN elixir --version
 
 COPY --chown=dependabot:dependabot hex/helpers /opt/hex/helpers
