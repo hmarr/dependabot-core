@@ -8,7 +8,7 @@ defmodule DependabotCore.Mixfile do
      start_permanent: Mix.env == :prod,
      lockfile: System.get_env("MIX_LOCK") || "mix.lock",
      deps_path: System.get_env("MIX_DEPS") || "deps",
-     deps: deps()]
+     deps: []]
   end
 
   def application do
