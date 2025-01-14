@@ -11,7 +11,7 @@ RUN wget https://binaries2.erlang-solutions.com/GPG-KEY-pmanager.asc \
   && sudo apt-key add GPG-KEY-pmanager.asc
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends erlang
+  && apt-get install -y --no-install-recommends erlang=${ERLANG_MAJOR_VERSION}
 
 # Install Elixir
 # https://github.com/elixir-lang/elixir/releases
