@@ -29,7 +29,6 @@ COPY --chown=dependabot:dependabot hex/helpers /opt/hex/helpers
 ENV MIX_HOME="/opt/hex/mix"
 # https://github.com/hexpm/hex/releases
 ENV HEX_VERSION="2.1.1"
-RUN mix local.hex "$HEX_VERSION" --force --if-missing
 RUN bash /opt/hex/helpers/build
 
 COPY --chown=dependabot:dependabot hex $DEPENDABOT_HOME/hex
