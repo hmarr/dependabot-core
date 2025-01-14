@@ -11,7 +11,7 @@ RUN apt-get update \
 #  * https://github.com/dependabot/dependabot-core/pull/7865
 #  * https://erlangforums.com/t/erlang-solutions-apt-package-for-otp-25/1552/1
 #  * https://erlangforums.com/t/the-eef-is-looking-for-volunteers-to-take-over-esls-build-packages/2238/1
-ARG ERLANG_MAJOR_VERSION=24
+ARG ERLANG_MAJOR_VERSION=27
 ARG ERLANG_VERSION=1:${ERLANG_MAJOR_VERSION}.2.1+dfsg-1ubuntu0.1
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -19,8 +19,8 @@ RUN apt-get update \
 
 # Install Elixir
 # https://github.com/elixir-lang/elixir/releases
-ARG ELIXIR_VERSION=v1.14.4
-ARG ELIXIR_CHECKSUM=b5705275d62ce3dae172d25d7ea567fffdabb45458abeb29c0189923b907367c
+ARG ELIXIR_VERSION=v1.18.1
+ARG ELIXIR_CHECKSUM=558113a9c03e891616982e802d76ebb75ff53a372aee8260a8e0ba746800d0ff
 RUN curl -sSLfO https://github.com/elixir-lang/elixir/releases/download/${ELIXIR_VERSION}/elixir-otp-${ERLANG_MAJOR_VERSION}.zip \
   && echo "$ELIXIR_CHECKSUM  elixir-otp-${ERLANG_MAJOR_VERSION}.zip" | sha256sum -c - \
   && unzip -d /usr/local/elixir -x elixir-otp-${ERLANG_MAJOR_VERSION}.zip \
@@ -32,7 +32,7 @@ USER dependabot
 COPY --chown=dependabot:dependabot hex/helpers /opt/hex/helpers
 ENV MIX_HOME="/opt/hex/mix"
 # https://github.com/hexpm/hex/releases
-ENV HEX_VERSION="2.0.6"
+ENV HEX_VERSION="2.1.1"
 RUN bash /opt/hex/helpers/build
 
 COPY --chown=dependabot:dependabot hex $DEPENDABOT_HOME/hex

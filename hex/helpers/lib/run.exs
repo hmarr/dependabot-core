@@ -1,7 +1,7 @@
 defmodule DependencyHelper do
   def main() do
     IO.read(:stdio, :all)
-    |> Jason.decode!()
+    |> JSON.decode!()
     |> run()
     |> case do
       {output, 0} ->
@@ -33,7 +33,7 @@ defmodule DependencyHelper do
 
   defp encode_and_write(content) do
     content
-    |> Jason.encode!()
+    |> JSON.encode!
     |> IO.write()
   end
 
