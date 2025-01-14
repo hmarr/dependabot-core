@@ -6,3 +6,4 @@
 /helpers/deps/
 /helpers/install-dir
 /dependabot-*.gem
+**/_build/

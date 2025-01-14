@@ -33,7 +33,7 @@ defmodule DependencyHelper do
 
   defp encode_and_write(content) do
     content
-    |> JSON.encode!
+    |> JSON.encode!()
     |> IO.write()
   end
 

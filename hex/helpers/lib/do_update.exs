@@ -12,15 +12,13 @@ System.cmd(
   [
     "deps.get",
     "--no-compile",
-    "--no-elixir-version-check",
+    "--no-elixir-version-check"
   ],
-  [
-    env: %{
-      "MIX_EXS" => nil,
-      "MIX_LOCK" => nil,
-      "MIX_DEPS" => nil
-    }
-  ]
+  env: %{
+    "MIX_EXS" => nil,
+    "MIX_LOCK" => nil,
+    "MIX_DEPS" => nil
+  }
 )
 
 lockfile_content =
