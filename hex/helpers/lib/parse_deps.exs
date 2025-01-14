@@ -82,7 +82,9 @@ defmodule Parser do
     |> empty_str_to_nil()
   end
 
-  defp maybe_regex_to_str(s), do: if(Regex.regex?(s), do: Regex.source(s), else: s)
+  defp maybe_regex_to_str(%Regex{} = s), do: Regex.source(s)
+  defp maybe_regex_to_str(s), do: s
+
   defp empty_str_to_nil(""), do: nil
   defp empty_str_to_nil(s), do: s
 
