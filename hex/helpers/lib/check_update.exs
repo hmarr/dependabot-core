@@ -45,24 +45,30 @@ end
 
 [dependency_name] = System.argv()
 
-case UpdateChecker.run(dependency_name) do
-  {:ok, version} ->
-    version = :erlang.term_to_binary({:ok, version})
-    IO.write(:stdio, version)
+try do
+  case UpdateChecker.run(dependency_name) do
+    {:ok, version} ->
+      version = :erlang.term_to_binary({:ok, version})
+      IO.write(:stdio, version)
 
-  {:error, %Version.InvalidRequirementError{} = error} ->
-    result = :erlang.term_to_binary({:error, "Invalid requirement: #{error.requirement}"})
-    IO.write(:stdio, result)
+    {:error, %Version.InvalidRequirementError{} = error} ->
+      result = :erlang.term_to_binary({:error, "Invalid requirement: #{error.requirement}"})
+      IO.write(:stdio, result)
 
-  {:error, %Mix.Error{} = error} ->
-    result = :erlang.term_to_binary({:error, "Dependency resolution failed: #{error.message}"})
-    IO.write(:stdio, result)
+    {:error, %Mix.Error{} = error} ->
+      result = :erlang.term_to_binary({:error, "Dependency resolution failed: #{error.message}"})
+      IO.write(:stdio, result)
 
-  {:error, :dependency_resolution_timed_out} ->
-    # We do nothing here because Hex is already printing out a message in stdout
-    nil
+    {:error, :dependency_resolution_timed_out} ->
+      # We do nothing here because Hex is already printing out a message in stdout
+      nil
 
-  {:error, error} ->
-    result = :erlang.term_to_binary({:error, "Unknown error in check_update: #{inspect(error)}"})
-    IO.write(:stdio, result)
+    {:error, error} ->
+      result = :erlang.term_to_binary({:error, "Unknown error in check_update: #{inspect(error)}"})
+      try do
+        IO.write(:stdio, result)
+      rescue e ->
+        IO.inspect("invalid chars: " <> inspect(error))
+      end
+  end
 end

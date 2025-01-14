@@ -255,8 +255,8 @@ RSpec.describe Dependabot::Hex::FileParser do
       end
 
       context "with a tag (rather than a ref)" do
-        let(:mixfile_fixture_name) { "git_source_with_charlist" }
-        let(:lockfile_fixture_name) { "git_source_with_charlist" }
+        let(:mixfile_fixture_name) { "git_source_tag_can_update" }
+        let(:lockfile_fixture_name) { "git_source_tag_can_update" }
 
         it "includes the git dependency" do
           expect(dependencies.length).to eq(2)
