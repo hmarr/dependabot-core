@@ -24,3 +24,5 @@ esac
 
 cp $CP_OPTS "$helpers_dir/lib" "$install_dir"
 cp $CP_OPTS "$helpers_dir/mix.exs" "$install_dir"
+
+cd "$install_dir"
