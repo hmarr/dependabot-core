@@ -2,7 +2,7 @@ FROM ghcr.io/dependabot/dependabot-updater-core
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y --no-install-recommends \
-    gnupg2
+    gnupg2 wget
 
 # Install Erlang
 # Note: Currently we install from Ubuntu PPA to unblock upgrading to Ubuntu 22.04, but we'd be happy to accept a PR
@@ -11,9 +11,9 @@ RUN apt-get update \
 #  * https://github.com/dependabot/dependabot-core/pull/7865
 #  * https://erlangforums.com/t/erlang-solutions-apt-package-for-otp-25/1552/1
 #  * https://erlangforums.com/t/the-eef-is-looking-for-volunteers-to-take-over-esls-build-packages/2238/1
-ARG ERLANG_MAJOR_VERSION=25
+ARG ERLANG_MAJOR_VERSION=26
 
-RUN echo "deb http://binaries2.erlang-solutions.com/ubuntu/ jammy-esl-erlang-25 contrib" >> /etc/apt/sources.list
+RUN echo "deb http://binaries2.erlang-solutions.com/ubuntu/ jammy-esl-erlang-26 contrib" >> /etc/apt/sources.list
 RUN wget https://binaries2.erlang-solutions.com/GPG-KEY-pmanager.asc \
   && sudo apt-key add GPG-KEY-pmanager.asc
 
