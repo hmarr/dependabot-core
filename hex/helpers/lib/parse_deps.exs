@@ -101,6 +101,6 @@ defmodule Parser do
   end
 end
 
-dependencies = :erlang.term_to_binary({:ok, Parser.run()})
+dependencies = :erlang.term_to_binary({:ok, Parser.run()}) |> Base.encode64()
 
 IO.write(:stdio, dependencies)

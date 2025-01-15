@@ -8,7 +8,7 @@ defmodule DependencyHelper do
         if output =~ "No authenticated organization found" do
           {:error, output}
         else
-          {:ok, :erlang.binary_to_term(output)}
+          {:ok, :erlang.binary_to_term(Base.decode64!(output))}
         end
 
       {error, 1} ->

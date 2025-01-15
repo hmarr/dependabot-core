@@ -25,5 +25,6 @@ lockfile_content =
   "mix.lock"
   |> File.read()
   |> :erlang.term_to_binary()
+  |> Base.encode64()
 
 IO.write(:stdio, lockfile_content)
