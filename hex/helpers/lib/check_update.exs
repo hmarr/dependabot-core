@@ -47,15 +47,15 @@ end
 
 case UpdateChecker.run(dependency_name) do
   {:ok, version} ->
-    version = :erlang.term_to_binary({:ok, version})
+    version = :erlang.term_to_binary({:ok, version}) |> Base.encode64()
     IO.write(:stdio, version)
 
-  {:error, %Version.InvalidRequirementError{} = error}  ->
-    result = :erlang.term_to_binary({:error, "Invalid requirement: #{error.requirement}"})
+  {:error, %Version.InvalidRequirementError{} = error} ->
+    result = :erlang.term_to_binary({:error, "Invalid requirement: #{error.requirement}"}) |> Base.encode64()
     IO.write(:stdio, result)
 
   {:error, %Mix.Error{} = error} ->
-    result = :erlang.term_to_binary({:error, "Dependency resolution failed: #{error.message}"})
+    result = :erlang.term_to_binary({:error, "Dependency resolution failed: #{error.message}"}) |> Base.encode64()
     IO.write(:stdio, result)
 
   {:error, :dependency_resolution_timed_out} ->
@@ -63,6 +63,8 @@ case UpdateChecker.run(dependency_name) do
     nil
 
   {:error, error} ->
-    result = :erlang.term_to_binary({:error, "Unknown error in check_update: #{inspect(error)}"})
+    result =
+      :erlang.term_to_binary({:error, "Unknown error in check_update: #{inspect(error)}"}) |> Base.encode64()
+
     IO.write(:stdio, result)
 end

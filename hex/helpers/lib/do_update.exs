@@ -12,20 +12,19 @@ System.cmd(
   [
     "deps.get",
     "--no-compile",
-    "--no-elixir-version-check",
+    "--no-elixir-version-check"
   ],
-  [
-    env: %{
-      "MIX_EXS" => nil,
-      "MIX_LOCK" => nil,
-      "MIX_DEPS" => nil
-    }
-  ]
+  env: %{
+    "MIX_EXS" => nil,
+    "MIX_LOCK" => nil,
+    "MIX_DEPS" => nil
+  }
 )
 
 lockfile_content =
   "mix.lock"
   |> File.read()
   |> :erlang.term_to_binary()
+  |> Base.encode64()
 
 IO.write(:stdio, lockfile_content)

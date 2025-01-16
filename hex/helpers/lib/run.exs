@@ -1,14 +1,14 @@
 defmodule DependencyHelper do
   def main() do
-    IO.read(:stdio, :all)
-    |> Jason.decode!()
+    IO.read(:stdio, :eof)
+    |> JSON.decode!()
     |> run()
     |> case do
       {output, 0} ->
         if output =~ "No authenticated organization found" do
           {:error, output}
         else
-          {:ok, :erlang.binary_to_term(output)}
+          {:ok, :erlang.binary_to_term(Base.decode64!(output))}
         end
 
       {error, 1} ->
@@ -33,7 +33,7 @@ defmodule DependencyHelper do
 
   defp encode_and_write(content) do
     content
-    |> Jason.encode!()
+    |> JSON.encode!()
     |> IO.write()
   end
 
