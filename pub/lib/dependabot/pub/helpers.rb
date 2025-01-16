@@ -235,6 +235,7 @@ module Dependabot
               # TODO(sigurdm): Would be nice to have a better handle for fixing the dart sdk version.
               "_PUB_TEST_SDK_VERSION" => sdk_versions["dart"]
             }
+
             command_dir = File.join(temp_dir, dependency_files.first&.directory)
 
             stdout, stderr, status = Open3.capture3(
